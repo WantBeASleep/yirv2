@@ -38,20 +38,21 @@
 * device_id
 
 Обозначения:
-    - uzi: id, projection, patient_id, device
-    - mutable: projection, patient_id, device
+    - Uzi: id, projection, patient_id, device_id
+    - CreateUziReq: projection, patient_id, device_id
+    - UziMut: projection, patient_id
 
 + /createUzi
-    - -> mutable
+    - -> CreateUziReq
     - <- id
 
 + /updateUzi 
-    - -> id + mutable
-    - <- uzi
+    - -> id + UziMut
+    - <- Uzi
 
 + /getUzi
     - -> id
-    - <- uzi
+    - <- Uzi
 
 #### Image
 
@@ -93,18 +94,20 @@ __Kafka__
 * tirads_5
 
 Обозначения:
-id, node_id, image_id, contor, tirads_23, tirads_4, tirads_5
+    - Segment: id, node_id, image_id, contor, tirads_23, tirads_4, tirads_5
+    - AddSegmentReq: node_id, image_id, contor, tirads_23, tirads_4, tirads_5
+    - SegmentMut: tirads_23, tirads_4, tirads_5
 
 + /addSegment
-    - -> node_id, image_id, contor, tirads_23, tirads_4, tirads_5
+    - -> AddSegmentReq
     - <- id
 
 + /delSegment
     - -> id
 
 + /updateSegment
-    - -> tirads_23, tirads_4, tirads_5
-    - <- id, node_id, image_id, contor, tirads_23, tirads_4, tirads_5
+    - -> id, SegmentMut
+    - <- Segment
 
 
 #### Node
@@ -116,15 +119,17 @@ id, node_id, image_id, contor, tirads_23, tirads_4, tirads_5
 * tirads_5
 
 Обозначения:
-id, ai, tirads_23, tirads_4, tirads_5
+    - Node: id, ai, tirads_23, tirads_4, tirads_5
+    - CreateNode: id, ai, tirads_23, tirads_4, tirads_5, []NestedToNodeSegment: image_id, contor, tirads_23, tirads_4, tirads_5
+    - NodeMut: tirads_23, tirads_4, tirads_5
 
 + /createNode
-    - -> ai, tirads_23, tirads_4, tirads_5 , []segments{ image_id, contor, tirads_23, tirads_4, tirads_5 }
+    - -> CreateNode
     - <- id
 
 + /delNode
     - -> id
 
 + /updateNode
-    - -> id, tirads_23, tirads_4, tirads_5
-    - <- id, ai, tirads_23, tirads_4, tirads_5
+    - -> id, NodeMut
+    - <- Node
