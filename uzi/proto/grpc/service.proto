@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "internal/generated/grpc/service";
+
+import "google/protobuf/empty.proto";
+
+service DeviceSrv {
+    rpc GetDeviceList(google.protobuf.Empty) returns(GetDeviceListOut);
+}
+
+message Device {
+    int64 id = 100;
+    string name = 200;
+}
+
+message GetDeviceListOut {
+    repeated Device devices = 100;
+}

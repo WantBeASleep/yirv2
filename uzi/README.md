@@ -5,7 +5,7 @@
 ## Сущности
 
 Представлены на картинке: 
-![uzi_db](../assets/uzi_db.png)
+![uzi_db](docs/assets/uzi_db.png)
 
 ## Tech
 

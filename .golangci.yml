@@ -19,6 +19,8 @@ linters:
     - lll
 
 linters-settings:
+  goimports:
+    local-prefixes: yirv2
   gosec:
     excludes:
       - G115

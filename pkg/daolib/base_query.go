@@ -12,9 +12,17 @@ type BaseQuerySetter interface {
 
 type BaseQuery struct {
 	ctx context.Context
-	Runner
+	runner Runner
 }
 
-func (BaseQuery) QueryBuilder() squirrel.StatementBuilderType {
+func (q *BaseQuery) Context() context.Context {
+	return q.ctx
+}
+
+func (q *BaseQuery) Runner() Runner {
+	return q.runner
+}
+
+func (*BaseQuery) QueryBuilder() squirrel.StatementBuilderType {
 	return squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
 }

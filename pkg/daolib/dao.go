@@ -65,7 +65,7 @@ func (d *dao) CommitTx(ctx context.Context) error {
 }
 
 func (d *dao) NewRepo(ctx context.Context, impl BaseQuerySetter) {
-	impl.SetBaseQuery(&BaseQuery{ctx: ctx, Runner: d.getRunner(ctx)})
+	impl.SetBaseQuery(&BaseQuery{ctx: ctx, runner: d.getRunner(ctx)})
 }
 
 func (d *dao) hasTx(ctx context.Context) bool {

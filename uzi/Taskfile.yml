@@ -1,0 +1,42 @@
+version: '3'
+
+vars:
+  VENDOR_PROTOGEN: '../vendor.protogen'
+
+tasks:
+  codegen:
+    vars:
+      proto_libs:
+        sh: find {{.VENDOR_PROTOGEN}} -mindepth 1 -maxdepth 1 -type d | xargs echo
+      # TODO: разделить на клиентов/сервис
+      proto_files: 
+        sh: find proto -type f -name "*.proto" | xargs echo
+
+    cmds: 
+      - for: {var: proto_files}
+        cmd: >
+            protoc
+            -I {{dir .ITEM}}
+            {{range $lib := splitList " " .proto_libs}}-I {{$lib}} {{end}}
+            --go_out . --go-grpc_out .
+            {{.ITEM}}
+  style:
+    cmds:
+      - go fmt ./...
+      - goimports -local yirv2 -w .
+      - gofumpt -l -w .
+
+  build:
+    cmds:
+      - task: codegen
+      - task: style
+      - go build -v -o bin/service cmd/service/main.go
+
+  run:
+    cmds:
+      - task: build
+      - ./bin/service
+
+  default:
+    cmds:
+      - task: run

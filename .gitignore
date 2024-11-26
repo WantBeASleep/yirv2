@@ -1,4 +1,10 @@
-# IDE
+# ide
 .vscode
 .idea
 
+# libs
+vendor.protogen/*
+!vendor.protogen/*.md
+
+#bin
+bin
