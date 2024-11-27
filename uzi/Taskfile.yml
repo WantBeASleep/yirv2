@@ -18,12 +18,13 @@ tasks:
             protoc
             -I {{dir .ITEM}}
             {{range $lib := splitList " " .proto_libs}}-I {{$lib}} {{end}}
+            --experimental_allow_proto3_optional
             --go_out . --go-grpc_out .
             {{.ITEM}}
   style:
     cmds:
       - go fmt ./...
-      - goimports -local yirv2 -w .
+      - goimports -w .
       - gofumpt -l -w .
 
   build:
@@ -39,4 +40,5 @@ tasks:
 
   default:
     cmds:
-      - task: run
+      - task: codegen
+      - task: style

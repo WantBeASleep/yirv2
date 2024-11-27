@@ -21,101 +21,177 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DeviceSrv_GetDeviceList_FullMethodName = "/DeviceSrv/GetDeviceList"
+	UziSrv_GetDeviceList_FullMethodName = "/UziSrv/GetDeviceList"
+	UziSrv_CreateUzi_FullMethodName     = "/UziSrv/CreateUzi"
+	UziSrv_UpdateUzi_FullMethodName     = "/UziSrv/UpdateUzi"
 )
 
-// DeviceSrvClient is the client API for DeviceSrv service.
+// UziSrvClient is the client API for UziSrv service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type DeviceSrvClient interface {
+type UziSrvClient interface {
 	GetDeviceList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetDeviceListOut, error)
+	CreateUzi(ctx context.Context, in *CreateUziIn, opts ...grpc.CallOption) (*Id, error)
+	UpdateUzi(ctx context.Context, in *UpdateUziIn, opts ...grpc.CallOption) (*UpdateUziOut, error)
 }
 
-type deviceSrvClient struct {
+type uziSrvClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewDeviceSrvClient(cc grpc.ClientConnInterface) DeviceSrvClient {
-	return &deviceSrvClient{cc}
+func NewUziSrvClient(cc grpc.ClientConnInterface) UziSrvClient {
+	return &uziSrvClient{cc}
 }
 
-func (c *deviceSrvClient) GetDeviceList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetDeviceListOut, error) {
+func (c *uziSrvClient) GetDeviceList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetDeviceListOut, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetDeviceListOut)
-	err := c.cc.Invoke(ctx, DeviceSrv_GetDeviceList_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, UziSrv_GetDeviceList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// DeviceSrvServer is the server API for DeviceSrv service.
-// All implementations must embed UnimplementedDeviceSrvServer
-// for forward compatibility.
-type DeviceSrvServer interface {
-	GetDeviceList(context.Context, *empty.Empty) (*GetDeviceListOut, error)
-	mustEmbedUnimplementedDeviceSrvServer()
+func (c *uziSrvClient) CreateUzi(ctx context.Context, in *CreateUziIn, opts ...grpc.CallOption) (*Id, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Id)
+	err := c.cc.Invoke(ctx, UziSrv_CreateUzi_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedDeviceSrvServer must be embedded to have
+func (c *uziSrvClient) UpdateUzi(ctx context.Context, in *UpdateUziIn, opts ...grpc.CallOption) (*UpdateUziOut, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateUziOut)
+	err := c.cc.Invoke(ctx, UziSrv_UpdateUzi_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UziSrvServer is the server API for UziSrv service.
+// All implementations must embed UnimplementedUziSrvServer
+// for forward compatibility.
+type UziSrvServer interface {
+	GetDeviceList(context.Context, *empty.Empty) (*GetDeviceListOut, error)
+	CreateUzi(context.Context, *CreateUziIn) (*Id, error)
+	UpdateUzi(context.Context, *UpdateUziIn) (*UpdateUziOut, error)
+	mustEmbedUnimplementedUziSrvServer()
+}
+
+// UnimplementedUziSrvServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedDeviceSrvServer struct{}
+type UnimplementedUziSrvServer struct{}
 
-func (UnimplementedDeviceSrvServer) GetDeviceList(context.Context, *empty.Empty) (*GetDeviceListOut, error) {
+func (UnimplementedUziSrvServer) GetDeviceList(context.Context, *empty.Empty) (*GetDeviceListOut, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceList not implemented")
 }
-func (UnimplementedDeviceSrvServer) mustEmbedUnimplementedDeviceSrvServer() {}
-func (UnimplementedDeviceSrvServer) testEmbeddedByValue()                   {}
+func (UnimplementedUziSrvServer) CreateUzi(context.Context, *CreateUziIn) (*Id, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUzi not implemented")
+}
+func (UnimplementedUziSrvServer) UpdateUzi(context.Context, *UpdateUziIn) (*UpdateUziOut, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUzi not implemented")
+}
+func (UnimplementedUziSrvServer) mustEmbedUnimplementedUziSrvServer() {}
+func (UnimplementedUziSrvServer) testEmbeddedByValue()                {}
 
-// UnsafeDeviceSrvServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to DeviceSrvServer will
+// UnsafeUziSrvServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UziSrvServer will
 // result in compilation errors.
-type UnsafeDeviceSrvServer interface {
-	mustEmbedUnimplementedDeviceSrvServer()
+type UnsafeUziSrvServer interface {
+	mustEmbedUnimplementedUziSrvServer()
 }
 
-func RegisterDeviceSrvServer(s grpc.ServiceRegistrar, srv DeviceSrvServer) {
-	// If the following call pancis, it indicates UnimplementedDeviceSrvServer was
+func RegisterUziSrvServer(s grpc.ServiceRegistrar, srv UziSrvServer) {
+	// If the following call pancis, it indicates UnimplementedUziSrvServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&DeviceSrv_ServiceDesc, srv)
+	s.RegisterService(&UziSrv_ServiceDesc, srv)
 }
 
-func _DeviceSrv_GetDeviceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UziSrv_GetDeviceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DeviceSrvServer).GetDeviceList(ctx, in)
+		return srv.(UziSrvServer).GetDeviceList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DeviceSrv_GetDeviceList_FullMethodName,
+		FullMethod: UziSrv_GetDeviceList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeviceSrvServer).GetDeviceList(ctx, req.(*empty.Empty))
+		return srv.(UziSrvServer).GetDeviceList(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// DeviceSrv_ServiceDesc is the grpc.ServiceDesc for DeviceSrv service.
+func _UziSrv_CreateUzi_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateUziIn)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UziSrvServer).CreateUzi(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UziSrv_CreateUzi_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UziSrvServer).CreateUzi(ctx, req.(*CreateUziIn))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UziSrv_UpdateUzi_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUziIn)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UziSrvServer).UpdateUzi(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UziSrv_UpdateUzi_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UziSrvServer).UpdateUzi(ctx, req.(*UpdateUziIn))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// UziSrv_ServiceDesc is the grpc.ServiceDesc for UziSrv service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var DeviceSrv_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "DeviceSrv",
-	HandlerType: (*DeviceSrvServer)(nil),
+var UziSrv_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "UziSrv",
+	HandlerType: (*UziSrvServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetDeviceList",
-			Handler:    _DeviceSrv_GetDeviceList_Handler,
+			Handler:    _UziSrv_GetDeviceList_Handler,
+		},
+		{
+			MethodName: "CreateUzi",
+			Handler:    _UziSrv_CreateUzi_Handler,
+		},
+		{
+			MethodName: "UpdateUzi",
+			Handler:    _UziSrv_UpdateUzi_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

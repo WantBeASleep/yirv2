@@ -3,30 +3,33 @@ package device
 import (
 	"context"
 
+	"yirv2/uzi/internal/repository"
+
 	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
 	pb "yirv2/uzi/internal/generated/grpc/service"
-	"yirv2/uzi/internal/services/device"
 )
 
-type Handler struct {
-	deviceSrv device.Device
-
-	pb.UnimplementedDeviceSrvServer
+type DeviceHandler interface {
+	GetDeviceList(ctx context.Context, _ *empty.Empty) (*pb.GetDeviceListOut, error)
 }
 
-func NewHandler(
-	deviceSrv device.Device,
-) *Handler {
-	return &Handler{
-		deviceSrv: deviceSrv,
+type handler struct {
+	dao repository.DAO
+}
+
+func New(
+	dao repository.DAO,
+) DeviceHandler {
+	return &handler{
+		dao: dao,
 	}
 }
 
-func (h *Handler) GetDeviceList(ctx context.Context, _ *empty.Empty) (*pb.GetDeviceListOut, error) {
-	devices, err := h.deviceSrv.GetDeviceList(ctx)
+func (h *handler) GetDeviceList(ctx context.Context, _ *empty.Empty) (*pb.GetDeviceListOut, error) {
+	devices, err := h.dao.NewDeviceQuery(ctx).GetDeviceList()
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Что то пошло не так: %s", err.Error())
 	}
@@ -34,7 +37,7 @@ func (h *Handler) GetDeviceList(ctx context.Context, _ *empty.Empty) (*pb.GetDev
 	out := new(pb.GetDeviceListOut)
 	for _, d := range devices {
 		pbDevice := domainDeviceToPbDevice(&d)
-		out.Devices = append(out.Devices, &pbDevice)
+		out.Devices = append(out.Devices, pbDevice)
 	}
 
 	return out, nil

@@ -8,7 +8,6 @@ linters:
     - ineffassign
     - typecheck
     - gosec
-    - gofumpt
     - goimports
     - gosimple
     - unused

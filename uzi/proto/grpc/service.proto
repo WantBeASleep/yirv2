@@ -4,15 +4,44 @@ option go_package = "internal/generated/grpc/service";
 
 import "google/protobuf/empty.proto";
 
-service DeviceSrv {
-    rpc GetDeviceList(google.protobuf.Empty) returns(GetDeviceListOut);
+service UziSrv {
+  rpc GetDeviceList(google.protobuf.Empty) returns (GetDeviceListOut);
+
+  rpc CreateUzi(CreateUziIn) returns (Id);
+  rpc UpdateUzi(UpdateUziIn) returns (UpdateUziOut);
 }
+
+// COMMON
+message Id { string id = 100; }
+
+// DEVICE
 
 message Device {
-    int64 id = 100;
-    string name = 200;
+  int64 id = 100;
+  string name = 200;
 }
 
-message GetDeviceListOut {
-    repeated Device devices = 100;
+message GetDeviceListOut { repeated Device devices = 100; }
+
+// UZI
+
+message Uzi {
+  string id = 100;
+  string projection = 300;
+  string patient_id = 400;
+  int64 device_id = 500;
 }
+
+message CreateUziIn {
+  string projection = 100;
+  string patient_id = 200;
+  int64 device_id = 300;
+}
+
+message UpdateUziIn {
+  string id = 100;
+  optional string projection = 200;
+  optional string patient_id = 300;
+}
+
+message UpdateUziOut { Uzi uzi = 100; }

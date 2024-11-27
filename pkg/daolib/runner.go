@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log/slog"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -32,6 +33,7 @@ func (tx *Tx) Execx(ctx context.Context, builder Builder) (sql.Result, error) {
 		return nil, fmt.Errorf("build sql req: %w", err)
 	}
 
+	slog.DebugContext(ctx, "tx psql exec", slog.String("query", query), slog.Any("args", args))
 	return tx.tx.ExecContext(ctx, query, args...)
 }
 
@@ -41,6 +43,7 @@ func (tx *Tx) Getx(ctx context.Context, dest interface{}, builder Builder) error
 		return fmt.Errorf("build sql req: %w", err)
 	}
 
+	slog.DebugContext(ctx, "tx psql getx", slog.String("query", query), slog.Any("args", args))
 	return tx.tx.GetContext(ctx, dest, query, args...)
 }
 
@@ -50,6 +53,7 @@ func (tx *Tx) Selectx(ctx context.Context, dest interface{}, builder Builder) er
 		return fmt.Errorf("build sql req: %w", err)
 	}
 
+	slog.DebugContext(ctx, "tx psql selectx", slog.String("query", query), slog.Any("args", args))
 	return tx.tx.SelectContext(ctx, dest, query, args...)
 }
 
@@ -67,6 +71,7 @@ func (db *DB) Execx(ctx context.Context, builder Builder) (sql.Result, error) {
 		return nil, fmt.Errorf("build sql req: %w", err)
 	}
 
+	slog.DebugContext(ctx, "psql exec", slog.String("query", query), slog.Any("args", args))
 	return db.db.ExecContext(ctx, query, args...)
 }
 
@@ -76,6 +81,7 @@ func (db *DB) Getx(ctx context.Context, dest interface{}, builder Builder) error
 		return fmt.Errorf("build sql req: %w", err)
 	}
 
+	slog.DebugContext(ctx, "psql getx", slog.String("query", query), slog.Any("args", args))
 	return db.db.GetContext(ctx, dest, query, args...)
 }
 
@@ -85,5 +91,6 @@ func (db *DB) Selectx(ctx context.Context, dest interface{}, builder Builder) er
 		return fmt.Errorf("build sql req: %w", err)
 	}
 
+	slog.DebugContext(ctx, "psql selectx", slog.String("query", query), slog.Any("args", args))
 	return db.db.SelectContext(ctx, dest, query, args...)
 }

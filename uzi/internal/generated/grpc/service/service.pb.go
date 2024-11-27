@@ -22,6 +22,54 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// COMMON
+type Id struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *Id) Reset() {
+	*x = Id{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Id) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Id) ProtoMessage() {}
+
+func (x *Id) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Id.ProtoReflect.Descriptor instead.
+func (*Id) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *Id) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 type Device struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -34,7 +82,7 @@ type Device struct {
 func (x *Device) Reset() {
 	*x = Device{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_proto_msgTypes[0]
+		mi := &file_service_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -47,7 +95,7 @@ func (x *Device) String() string {
 func (*Device) ProtoMessage() {}
 
 func (x *Device) ProtoReflect() protoreflect.Message {
-	mi := &file_service_proto_msgTypes[0]
+	mi := &file_service_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60,7 +108,7 @@ func (x *Device) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Device.ProtoReflect.Descriptor instead.
 func (*Device) Descriptor() ([]byte, []int) {
-	return file_service_proto_rawDescGZIP(), []int{0}
+	return file_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Device) GetId() int64 {
@@ -88,7 +136,7 @@ type GetDeviceListOut struct {
 func (x *GetDeviceListOut) Reset() {
 	*x = GetDeviceListOut{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_proto_msgTypes[1]
+		mi := &file_service_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -101,7 +149,7 @@ func (x *GetDeviceListOut) String() string {
 func (*GetDeviceListOut) ProtoMessage() {}
 
 func (x *GetDeviceListOut) ProtoReflect() protoreflect.Message {
-	mi := &file_service_proto_msgTypes[1]
+	mi := &file_service_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -114,7 +162,7 @@ func (x *GetDeviceListOut) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDeviceListOut.ProtoReflect.Descriptor instead.
 func (*GetDeviceListOut) Descriptor() ([]byte, []int) {
-	return file_service_proto_rawDescGZIP(), []int{1}
+	return file_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetDeviceListOut) GetDevices() []*Device {
@@ -124,26 +172,301 @@ func (x *GetDeviceListOut) GetDevices() []*Device {
 	return nil
 }
 
+type Uzi struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id         string `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+	Projection string `protobuf:"bytes,300,opt,name=projection,proto3" json:"projection,omitempty"`
+	PatientId  string `protobuf:"bytes,400,opt,name=patient_id,json=patientId,proto3" json:"patient_id,omitempty"`
+	DeviceId   int64  `protobuf:"varint,500,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+}
+
+func (x *Uzi) Reset() {
+	*x = Uzi{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Uzi) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Uzi) ProtoMessage() {}
+
+func (x *Uzi) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Uzi.ProtoReflect.Descriptor instead.
+func (*Uzi) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Uzi) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Uzi) GetProjection() string {
+	if x != nil {
+		return x.Projection
+	}
+	return ""
+}
+
+func (x *Uzi) GetPatientId() string {
+	if x != nil {
+		return x.PatientId
+	}
+	return ""
+}
+
+func (x *Uzi) GetDeviceId() int64 {
+	if x != nil {
+		return x.DeviceId
+	}
+	return 0
+}
+
+type CreateUziIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Projection string `protobuf:"bytes,100,opt,name=projection,proto3" json:"projection,omitempty"`
+	PatientId  string `protobuf:"bytes,200,opt,name=patient_id,json=patientId,proto3" json:"patient_id,omitempty"`
+	DeviceId   int64  `protobuf:"varint,300,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+}
+
+func (x *CreateUziIn) Reset() {
+	*x = CreateUziIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateUziIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateUziIn) ProtoMessage() {}
+
+func (x *CreateUziIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateUziIn.ProtoReflect.Descriptor instead.
+func (*CreateUziIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CreateUziIn) GetProjection() string {
+	if x != nil {
+		return x.Projection
+	}
+	return ""
+}
+
+func (x *CreateUziIn) GetPatientId() string {
+	if x != nil {
+		return x.PatientId
+	}
+	return ""
+}
+
+func (x *CreateUziIn) GetDeviceId() int64 {
+	if x != nil {
+		return x.DeviceId
+	}
+	return 0
+}
+
+type UpdateUziIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id         string  `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+	Projection *string `protobuf:"bytes,200,opt,name=projection,proto3,oneof" json:"projection,omitempty"`
+	PatientId  *string `protobuf:"bytes,300,opt,name=patient_id,json=patientId,proto3,oneof" json:"patient_id,omitempty"`
+}
+
+func (x *UpdateUziIn) Reset() {
+	*x = UpdateUziIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateUziIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateUziIn) ProtoMessage() {}
+
+func (x *UpdateUziIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateUziIn.ProtoReflect.Descriptor instead.
+func (*UpdateUziIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *UpdateUziIn) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateUziIn) GetProjection() string {
+	if x != nil && x.Projection != nil {
+		return *x.Projection
+	}
+	return ""
+}
+
+func (x *UpdateUziIn) GetPatientId() string {
+	if x != nil && x.PatientId != nil {
+		return *x.PatientId
+	}
+	return ""
+}
+
+type UpdateUziOut struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Uzi *Uzi `protobuf:"bytes,100,opt,name=uzi,proto3" json:"uzi,omitempty"`
+}
+
+func (x *UpdateUziOut) Reset() {
+	*x = UpdateUziOut{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateUziOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateUziOut) ProtoMessage() {}
+
+func (x *UpdateUziOut) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateUziOut.ProtoReflect.Descriptor instead.
+func (*UpdateUziOut) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UpdateUziOut) GetUzi() *Uzi {
+	if x != nil {
+		return x.Uzi
+	}
+	return nil
+}
+
 var File_service_proto protoreflect.FileDescriptor
 
 var file_service_proto_rawDesc = []byte{
 	0x0a, 0x0d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a,
 	0x1b, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
-	0x2f, 0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x2d, 0x0a, 0x06,
-	0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20, 0x01,
-	0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x13, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0xc8,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x35, 0x0a, 0x10, 0x47,
-	0x65, 0x74, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x4f, 0x75, 0x74, 0x12,
-	0x21, 0x0a, 0x07, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x73, 0x18, 0x64, 0x20, 0x03, 0x28, 0x0b,
-	0x32, 0x07, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x52, 0x07, 0x64, 0x65, 0x76, 0x69, 0x63,
-	0x65, 0x73, 0x32, 0x47, 0x0a, 0x09, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x53, 0x72, 0x76, 0x12,
-	0x3a, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74,
-	0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
-	0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x11, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x65,
-	0x76, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x4f, 0x75, 0x74, 0x42, 0x21, 0x5a, 0x1f, 0x69,
-	0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x74, 0x65,
-	0x64, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2f, 0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x14, 0x0a, 0x02,
+	0x49, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02,
+	0x69, 0x64, 0x22, 0x2d, 0x0a, 0x06, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x12, 0x0e, 0x0a, 0x02,
+	0x69, 0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x13, 0x0a, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0xc8, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x22, 0x35, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4c, 0x69,
+	0x73, 0x74, 0x4f, 0x75, 0x74, 0x12, 0x21, 0x0a, 0x07, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x73,
+	0x18, 0x64, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x07, 0x2e, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x52,
+	0x07, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x73, 0x22, 0x74, 0x0a, 0x03, 0x55, 0x7a, 0x69, 0x12,
+	0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12,
+	0x1f, 0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0xac, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x12, 0x1e, 0x0a, 0x0a, 0x70, 0x61, 0x74, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x90,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x74, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x64,
+	0x12, 0x1c, 0x0a, 0x09, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0xf4, 0x03,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x49, 0x64, 0x22, 0x6b,
+	0x0a, 0x0b, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x49, 0x6e, 0x12, 0x1e, 0x0a,
+	0x0a, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x64, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1e, 0x0a,
+	0x0a, 0x70, 0x61, 0x74, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0xc8, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x74, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x1c, 0x0a,
+	0x09, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0xac, 0x02, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x08, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x49, 0x64, 0x22, 0x86, 0x01, 0x0a, 0x0b,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x49, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x24, 0x0a, 0x0a, 0x70,
+	0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0xc8, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x48, 0x00, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x88, 0x01,
+	0x01, 0x12, 0x23, 0x0a, 0x0a, 0x70, 0x61, 0x74, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18,
+	0xac, 0x02, 0x20, 0x01, 0x28, 0x09, 0x48, 0x01, 0x52, 0x09, 0x70, 0x61, 0x74, 0x69, 0x65, 0x6e,
+	0x74, 0x49, 0x64, 0x88, 0x01, 0x01, 0x42, 0x0d, 0x0a, 0x0b, 0x5f, 0x70, 0x72, 0x6f, 0x6a, 0x65,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x0d, 0x0a, 0x0b, 0x5f, 0x70, 0x61, 0x74, 0x69, 0x65, 0x6e,
+	0x74, 0x5f, 0x69, 0x64, 0x22, 0x26, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a,
+	0x69, 0x4f, 0x75, 0x74, 0x12, 0x16, 0x0a, 0x03, 0x75, 0x7a, 0x69, 0x18, 0x64, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x04, 0x2e, 0x55, 0x7a, 0x69, 0x52, 0x03, 0x75, 0x7a, 0x69, 0x32, 0x8e, 0x01, 0x0a,
+	0x06, 0x55, 0x7a, 0x69, 0x53, 0x72, 0x76, 0x12, 0x3a, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x44, 0x65,
+	0x76, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
+	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79,
+	0x1a, 0x11, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74,
+	0x4f, 0x75, 0x74, 0x12, 0x1e, 0x0a, 0x09, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69,
+	0x12, 0x0c, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x49, 0x6e, 0x1a, 0x03,
+	0x2e, 0x49, 0x64, 0x12, 0x28, 0x0a, 0x09, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69,
+	0x12, 0x0c, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x49, 0x6e, 0x1a, 0x0d,
+	0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x4f, 0x75, 0x74, 0x42, 0x21, 0x5a,
+	0x1f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x61,
+	0x74, 0x65, 0x64, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -158,21 +481,31 @@ func file_service_proto_rawDescGZIP() []byte {
 	return file_service_proto_rawDescData
 }
 
-var file_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_service_proto_goTypes = []any{
-	(*Device)(nil),           // 0: Device
-	(*GetDeviceListOut)(nil), // 1: GetDeviceListOut
-	(*empty.Empty)(nil),      // 2: google.protobuf.Empty
+	(*Id)(nil),               // 0: Id
+	(*Device)(nil),           // 1: Device
+	(*GetDeviceListOut)(nil), // 2: GetDeviceListOut
+	(*Uzi)(nil),              // 3: Uzi
+	(*CreateUziIn)(nil),      // 4: CreateUziIn
+	(*UpdateUziIn)(nil),      // 5: UpdateUziIn
+	(*UpdateUziOut)(nil),     // 6: UpdateUziOut
+	(*empty.Empty)(nil),      // 7: google.protobuf.Empty
 }
 var file_service_proto_depIdxs = []int32{
-	0, // 0: GetDeviceListOut.devices:type_name -> Device
-	2, // 1: DeviceSrv.GetDeviceList:input_type -> google.protobuf.Empty
-	1, // 2: DeviceSrv.GetDeviceList:output_type -> GetDeviceListOut
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	1, // 0: GetDeviceListOut.devices:type_name -> Device
+	3, // 1: UpdateUziOut.uzi:type_name -> Uzi
+	7, // 2: UziSrv.GetDeviceList:input_type -> google.protobuf.Empty
+	4, // 3: UziSrv.CreateUzi:input_type -> CreateUziIn
+	5, // 4: UziSrv.UpdateUzi:input_type -> UpdateUziIn
+	2, // 5: UziSrv.GetDeviceList:output_type -> GetDeviceListOut
+	0, // 6: UziSrv.CreateUzi:output_type -> Id
+	6, // 7: UziSrv.UpdateUzi:output_type -> UpdateUziOut
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_service_proto_init() }
@@ -182,7 +515,7 @@ func file_service_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_service_proto_msgTypes[0].Exporter = func(v any, i int) any {
-			switch v := v.(*Device); i {
+			switch v := v.(*Id); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -194,6 +527,18 @@ func file_service_proto_init() {
 			}
 		}
 		file_service_proto_msgTypes[1].Exporter = func(v any, i int) any {
+			switch v := v.(*Device); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[2].Exporter = func(v any, i int) any {
 			switch v := v.(*GetDeviceListOut); i {
 			case 0:
 				return &v.state
@@ -205,14 +550,63 @@ func file_service_proto_init() {
 				return nil
 			}
 		}
+		file_service_proto_msgTypes[3].Exporter = func(v any, i int) any {
+			switch v := v.(*Uzi); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[4].Exporter = func(v any, i int) any {
+			switch v := v.(*CreateUziIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[5].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateUziIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[6].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateUziOut); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
+	file_service_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

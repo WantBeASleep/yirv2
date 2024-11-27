@@ -8,14 +8,18 @@ import (
 
 	pkgconfig "yirv2/pkg/config"
 	"yirv2/uzi/internal/config"
-	pb "yirv2/uzi/internal/generated/grpc/service"
-	devicehandler "yirv2/uzi/internal/grpc/device"
+
 	"yirv2/uzi/internal/repository"
-	devicesrv "yirv2/uzi/internal/services/device"
+
+	uzisrv "yirv2/uzi/internal/services/uzi"
+
+	pb "yirv2/uzi/internal/generated/grpc/service"
+	grpchandler "yirv2/uzi/internal/grpc"
+	devicehandler "yirv2/uzi/internal/grpc/device"
+	uzihandler "yirv2/uzi/internal/grpc/uzi"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
-
 	"google.golang.org/grpc"
 )
 
@@ -33,6 +37,7 @@ func main() {
 }
 
 func run() (exitCode int) {
+	slog.SetLogLoggerLevel(slog.LevelDebug)
 	cfg, err := pkgconfig.Load[config.Config](defaultCfgPath)
 	if err != nil {
 		slog.Error("init config", "err", err)
@@ -52,11 +57,19 @@ func run() (exitCode int) {
 	}
 
 	dao := repository.NewRepository(db)
-	deviceSrv := devicesrv.NewDeviceService(dao)
-	deviceHandler := devicehandler.NewHandler(deviceSrv)
+
+	uziSrv := uzisrv.New(dao)
+
+	deviceHandler := devicehandler.New(dao)
+	uziHandler := uzihandler.New(uziSrv)
+
+	handler := grpchandler.New(
+		deviceHandler,
+		uziHandler,
+	)
 
 	server := grpc.NewServer()
-	pb.RegisterDeviceSrvServer(server, deviceHandler)
+	pb.RegisterUziSrvServer(server, handler)
 
 	lis, err := net.Listen("tcp", cfg.App.Url)
 	if err != nil {

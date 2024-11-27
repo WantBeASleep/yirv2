@@ -10,7 +10,8 @@ import (
 
 type DAO interface {
 	daolib.DAO
-	NewDeviceQuery(ctx context.Context) DeviceQuery
+	NewDeviceQuery(context.Context) DeviceQuery
+	NewUziQuery(context.Context) UziQuery
 }
 
 type dao struct {
@@ -26,4 +27,11 @@ func (d *dao) NewDeviceQuery(ctx context.Context) DeviceQuery {
 	d.NewRepo(ctx, deviceQuery)
 
 	return deviceQuery
+}
+
+func (d *dao) NewUziQuery(ctx context.Context) UziQuery {
+	uziQuery := &uziQuery{}
+	d.NewRepo(ctx, uziQuery)
+
+	return uziQuery
 }

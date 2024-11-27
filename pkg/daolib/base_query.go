@@ -3,7 +3,7 @@ package daolib
 import (
 	"context"
 
-	"github.com/Masterminds/squirrel"
+	sq "github.com/Masterminds/squirrel"
 )
 
 type BaseQuerySetter interface {
@@ -11,7 +11,7 @@ type BaseQuerySetter interface {
 }
 
 type BaseQuery struct {
-	ctx context.Context
+	ctx    context.Context
 	runner Runner
 }
 
@@ -23,6 +23,6 @@ func (q *BaseQuery) Runner() Runner {
 	return q.runner
 }
 
-func (*BaseQuery) QueryBuilder() squirrel.StatementBuilderType {
-	return squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
+func (*BaseQuery) QueryBuilder() sq.StatementBuilderType {
+	return sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 }
