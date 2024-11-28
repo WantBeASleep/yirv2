@@ -133,3 +133,7 @@ __Kafka__
 + /updateNode
     - -> id, NodeMut
     - <- Node
+
+## TODO:
++ Логирование из контекста
++ Keep alive

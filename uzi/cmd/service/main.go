@@ -7,6 +7,8 @@ import (
 	"os"
 
 	pkgconfig "yirv2/pkg/config"
+	"yirv2/pkg/grpclib"
+	pkglog "yirv2/pkg/log"
 	"yirv2/uzi/internal/config"
 
 	"yirv2/uzi/internal/repository"
@@ -37,7 +39,7 @@ func main() {
 }
 
 func run() (exitCode int) {
-	slog.SetLogLoggerLevel(slog.LevelDebug)
+	pkglog.InitLogger()
 	cfg, err := pkgconfig.Load[config.Config](defaultCfgPath)
 	if err != nil {
 		slog.Error("init config", "err", err)
@@ -68,7 +70,7 @@ func run() (exitCode int) {
 		uziHandler,
 	)
 
-	server := grpc.NewServer()
+	server := grpc.NewServer(grpc.ChainUnaryInterceptor(grpclib.ServerCallLoggerInterceptor))
 	pb.RegisterUziSrvServer(server, handler)
 
 	lis, err := net.Listen("tcp", cfg.App.Url)

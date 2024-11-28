@@ -3,7 +3,7 @@ package uzi
 import (
 	"context"
 
-	"yirv2/pkg/gtc"
+	"yirv2/pkg/gtclib"
 	"yirv2/uzi/internal/domain"
 	pb "yirv2/uzi/internal/generated/grpc/service"
 	"yirv2/uzi/internal/services/uzi"
@@ -48,7 +48,7 @@ func (h *handler) UpdateUzi(ctx context.Context, req *pb.UpdateUziIn) (*pb.Updat
 		uuid.MustParse(req.Id),
 		uzi.OptionalUzi{
 			Projection: req.Projection,
-			PatientID:  gtc.Uuid.StringPToP(req.PatientId),
+			PatientID:  gtclib.Uuid.StringPToP(req.PatientId),
 		},
 	)
 	if err != nil {
