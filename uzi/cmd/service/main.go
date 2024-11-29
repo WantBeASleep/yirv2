@@ -32,7 +32,7 @@ import (
 )
 
 const (
-	defaultCfgPath = "/home/wantbeasleep/yirv2/uzi/service.yml"
+	defaultCfgPath = "uzi/service.yml"
 )
 
 const (
