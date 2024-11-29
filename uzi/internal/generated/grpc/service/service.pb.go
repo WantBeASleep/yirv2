@@ -306,6 +306,53 @@ func (x *CreateUziIn) GetDeviceId() int64 {
 	return 0
 }
 
+type CreateUziOut struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *CreateUziOut) Reset() {
+	*x = CreateUziOut{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateUziOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateUziOut) ProtoMessage() {}
+
+func (x *CreateUziOut) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateUziOut.ProtoReflect.Descriptor instead.
+func (*CreateUziOut) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CreateUziOut) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 type UpdateUziIn struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -319,7 +366,7 @@ type UpdateUziIn struct {
 func (x *UpdateUziIn) Reset() {
 	*x = UpdateUziIn{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_proto_msgTypes[5]
+		mi := &file_service_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -332,7 +379,7 @@ func (x *UpdateUziIn) String() string {
 func (*UpdateUziIn) ProtoMessage() {}
 
 func (x *UpdateUziIn) ProtoReflect() protoreflect.Message {
-	mi := &file_service_proto_msgTypes[5]
+	mi := &file_service_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -345,7 +392,7 @@ func (x *UpdateUziIn) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUziIn.ProtoReflect.Descriptor instead.
 func (*UpdateUziIn) Descriptor() ([]byte, []int) {
-	return file_service_proto_rawDescGZIP(), []int{5}
+	return file_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UpdateUziIn) GetId() string {
@@ -380,7 +427,7 @@ type UpdateUziOut struct {
 func (x *UpdateUziOut) Reset() {
 	*x = UpdateUziOut{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_proto_msgTypes[6]
+		mi := &file_service_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -393,7 +440,7 @@ func (x *UpdateUziOut) String() string {
 func (*UpdateUziOut) ProtoMessage() {}
 
 func (x *UpdateUziOut) ProtoReflect() protoreflect.Message {
-	mi := &file_service_proto_msgTypes[6]
+	mi := &file_service_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -406,7 +453,7 @@ func (x *UpdateUziOut) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUziOut.ProtoReflect.Descriptor instead.
 func (*UpdateUziOut) Descriptor() ([]byte, []int) {
-	return file_service_proto_rawDescGZIP(), []int{6}
+	return file_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *UpdateUziOut) GetUzi() *Uzi {
@@ -414,6 +461,1194 @@ func (x *UpdateUziOut) GetUzi() *Uzi {
 		return x.Uzi
 	}
 	return nil
+}
+
+type GetUziIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *GetUziIn) Reset() {
+	*x = GetUziIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetUziIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUziIn) ProtoMessage() {}
+
+func (x *GetUziIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUziIn.ProtoReflect.Descriptor instead.
+func (*GetUziIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetUziIn) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetUziOut struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Uzi *Uzi `protobuf:"bytes,100,opt,name=uzi,proto3" json:"uzi,omitempty"`
+}
+
+func (x *GetUziOut) Reset() {
+	*x = GetUziOut{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetUziOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUziOut) ProtoMessage() {}
+
+func (x *GetUziOut) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUziOut.ProtoReflect.Descriptor instead.
+func (*GetUziOut) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetUziOut) GetUzi() *Uzi {
+	if x != nil {
+		return x.Uzi
+	}
+	return nil
+}
+
+type Image struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id   string `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+	Page int64  `protobuf:"varint,200,opt,name=page,proto3" json:"page,omitempty"`
+}
+
+func (x *Image) Reset() {
+	*x = Image{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Image) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Image) ProtoMessage() {}
+
+func (x *Image) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Image.ProtoReflect.Descriptor instead.
+func (*Image) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *Image) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Image) GetPage() int64 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+type GetUziImagesIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UziId string `protobuf:"bytes,100,opt,name=uzi_id,json=uziId,proto3" json:"uzi_id,omitempty"`
+}
+
+func (x *GetUziImagesIn) Reset() {
+	*x = GetUziImagesIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetUziImagesIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUziImagesIn) ProtoMessage() {}
+
+func (x *GetUziImagesIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUziImagesIn.ProtoReflect.Descriptor instead.
+func (*GetUziImagesIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetUziImagesIn) GetUziId() string {
+	if x != nil {
+		return x.UziId
+	}
+	return ""
+}
+
+type GetUziImagesOut struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Images []*Image `protobuf:"bytes,100,rep,name=images,proto3" json:"images,omitempty"`
+}
+
+func (x *GetUziImagesOut) Reset() {
+	*x = GetUziImagesOut{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetUziImagesOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUziImagesOut) ProtoMessage() {}
+
+func (x *GetUziImagesOut) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUziImagesOut.ProtoReflect.Descriptor instead.
+func (*GetUziImagesOut) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetUziImagesOut) GetImages() []*Image {
+	if x != nil {
+		return x.Images
+	}
+	return nil
+}
+
+type Segment struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id        string  `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+	NodeId    string  `protobuf:"bytes,200,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
+	ImageId   string  `protobuf:"bytes,300,opt,name=image_id,json=imageId,proto3" json:"image_id,omitempty"`
+	Contor    string  `protobuf:"bytes,400,opt,name=contor,proto3" json:"contor,omitempty"`
+	Tirads_23 float64 `protobuf:"fixed64,500,opt,name=tirads_23,json=tirads23,proto3" json:"tirads_23,omitempty"`
+	Tirads_4  float64 `protobuf:"fixed64,600,opt,name=tirads_4,json=tirads4,proto3" json:"tirads_4,omitempty"`
+	Tirads_5  float64 `protobuf:"fixed64,700,opt,name=tirads_5,json=tirads5,proto3" json:"tirads_5,omitempty"`
+}
+
+func (x *Segment) Reset() {
+	*x = Segment{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Segment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Segment) ProtoMessage() {}
+
+func (x *Segment) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Segment.ProtoReflect.Descriptor instead.
+func (*Segment) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *Segment) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Segment) GetNodeId() string {
+	if x != nil {
+		return x.NodeId
+	}
+	return ""
+}
+
+func (x *Segment) GetImageId() string {
+	if x != nil {
+		return x.ImageId
+	}
+	return ""
+}
+
+func (x *Segment) GetContor() string {
+	if x != nil {
+		return x.Contor
+	}
+	return ""
+}
+
+func (x *Segment) GetTirads_23() float64 {
+	if x != nil {
+		return x.Tirads_23
+	}
+	return 0
+}
+
+func (x *Segment) GetTirads_4() float64 {
+	if x != nil {
+		return x.Tirads_4
+	}
+	return 0
+}
+
+func (x *Segment) GetTirads_5() float64 {
+	if x != nil {
+		return x.Tirads_5
+	}
+	return 0
+}
+
+type CreateSegmentIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	NodeId    string  `protobuf:"bytes,100,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
+	ImageId   string  `protobuf:"bytes,200,opt,name=image_id,json=imageId,proto3" json:"image_id,omitempty"`
+	Contor    string  `protobuf:"bytes,300,opt,name=contor,proto3" json:"contor,omitempty"`
+	Tirads_23 float64 `protobuf:"fixed64,400,opt,name=tirads_23,json=tirads23,proto3" json:"tirads_23,omitempty"`
+	Tirads_4  float64 `protobuf:"fixed64,500,opt,name=tirads_4,json=tirads4,proto3" json:"tirads_4,omitempty"`
+	Tirads_5  float64 `protobuf:"fixed64,600,opt,name=tirads_5,json=tirads5,proto3" json:"tirads_5,omitempty"`
+}
+
+func (x *CreateSegmentIn) Reset() {
+	*x = CreateSegmentIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateSegmentIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSegmentIn) ProtoMessage() {}
+
+func (x *CreateSegmentIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSegmentIn.ProtoReflect.Descriptor instead.
+func (*CreateSegmentIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *CreateSegmentIn) GetNodeId() string {
+	if x != nil {
+		return x.NodeId
+	}
+	return ""
+}
+
+func (x *CreateSegmentIn) GetImageId() string {
+	if x != nil {
+		return x.ImageId
+	}
+	return ""
+}
+
+func (x *CreateSegmentIn) GetContor() string {
+	if x != nil {
+		return x.Contor
+	}
+	return ""
+}
+
+func (x *CreateSegmentIn) GetTirads_23() float64 {
+	if x != nil {
+		return x.Tirads_23
+	}
+	return 0
+}
+
+func (x *CreateSegmentIn) GetTirads_4() float64 {
+	if x != nil {
+		return x.Tirads_4
+	}
+	return 0
+}
+
+func (x *CreateSegmentIn) GetTirads_5() float64 {
+	if x != nil {
+		return x.Tirads_5
+	}
+	return 0
+}
+
+type CreateSegmentOut struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *CreateSegmentOut) Reset() {
+	*x = CreateSegmentOut{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateSegmentOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSegmentOut) ProtoMessage() {}
+
+func (x *CreateSegmentOut) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSegmentOut.ProtoReflect.Descriptor instead.
+func (*CreateSegmentOut) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *CreateSegmentOut) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeleteSegmentIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *DeleteSegmentIn) Reset() {
+	*x = DeleteSegmentIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteSegmentIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSegmentIn) ProtoMessage() {}
+
+func (x *DeleteSegmentIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSegmentIn.ProtoReflect.Descriptor instead.
+func (*DeleteSegmentIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *DeleteSegmentIn) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type UpdateSegmentIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id        string   `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+	Contor    *string  `protobuf:"bytes,300,opt,name=contor,proto3,oneof" json:"contor,omitempty"`
+	Tirads_23 *float64 `protobuf:"fixed64,400,opt,name=tirads_23,json=tirads23,proto3,oneof" json:"tirads_23,omitempty"`
+	Tirads_4  *float64 `protobuf:"fixed64,500,opt,name=tirads_4,json=tirads4,proto3,oneof" json:"tirads_4,omitempty"`
+	Tirads_5  *float64 `protobuf:"fixed64,600,opt,name=tirads_5,json=tirads5,proto3,oneof" json:"tirads_5,omitempty"`
+}
+
+func (x *UpdateSegmentIn) Reset() {
+	*x = UpdateSegmentIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateSegmentIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSegmentIn) ProtoMessage() {}
+
+func (x *UpdateSegmentIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSegmentIn.ProtoReflect.Descriptor instead.
+func (*UpdateSegmentIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *UpdateSegmentIn) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateSegmentIn) GetContor() string {
+	if x != nil && x.Contor != nil {
+		return *x.Contor
+	}
+	return ""
+}
+
+func (x *UpdateSegmentIn) GetTirads_23() float64 {
+	if x != nil && x.Tirads_23 != nil {
+		return *x.Tirads_23
+	}
+	return 0
+}
+
+func (x *UpdateSegmentIn) GetTirads_4() float64 {
+	if x != nil && x.Tirads_4 != nil {
+		return *x.Tirads_4
+	}
+	return 0
+}
+
+func (x *UpdateSegmentIn) GetTirads_5() float64 {
+	if x != nil && x.Tirads_5 != nil {
+		return *x.Tirads_5
+	}
+	return 0
+}
+
+type UpdateSegmentOut struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Segment *Segment `protobuf:"bytes,100,opt,name=segment,proto3" json:"segment,omitempty"`
+}
+
+func (x *UpdateSegmentOut) Reset() {
+	*x = UpdateSegmentOut{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateSegmentOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSegmentOut) ProtoMessage() {}
+
+func (x *UpdateSegmentOut) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSegmentOut.ProtoReflect.Descriptor instead.
+func (*UpdateSegmentOut) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *UpdateSegmentOut) GetSegment() *Segment {
+	if x != nil {
+		return x.Segment
+	}
+	return nil
+}
+
+type Node struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id        string  `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+	Ai        bool    `protobuf:"varint,200,opt,name=ai,proto3" json:"ai,omitempty"`
+	Tirads_23 float64 `protobuf:"fixed64,400,opt,name=tirads_23,json=tirads23,proto3" json:"tirads_23,omitempty"`
+	Tirads_4  float64 `protobuf:"fixed64,500,opt,name=tirads_4,json=tirads4,proto3" json:"tirads_4,omitempty"`
+	Tirads_5  float64 `protobuf:"fixed64,600,opt,name=tirads_5,json=tirads5,proto3" json:"tirads_5,omitempty"`
+}
+
+func (x *Node) Reset() {
+	*x = Node{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Node) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Node) ProtoMessage() {}
+
+func (x *Node) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Node.ProtoReflect.Descriptor instead.
+func (*Node) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *Node) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Node) GetAi() bool {
+	if x != nil {
+		return x.Ai
+	}
+	return false
+}
+
+func (x *Node) GetTirads_23() float64 {
+	if x != nil {
+		return x.Tirads_23
+	}
+	return 0
+}
+
+func (x *Node) GetTirads_4() float64 {
+	if x != nil {
+		return x.Tirads_4
+	}
+	return 0
+}
+
+func (x *Node) GetTirads_5() float64 {
+	if x != nil {
+		return x.Tirads_5
+	}
+	return 0
+}
+
+type CreateNodeIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Segments  []*CreateNodeIn_NestedSegment `protobuf:"bytes,200,rep,name=segments,proto3" json:"segments,omitempty"`
+	Tirads_23 float64                       `protobuf:"fixed64,300,opt,name=tirads_23,json=tirads23,proto3" json:"tirads_23,omitempty"`
+	Tirads_4  float64                       `protobuf:"fixed64,400,opt,name=tirads_4,json=tirads4,proto3" json:"tirads_4,omitempty"`
+	Tirads_5  float64                       `protobuf:"fixed64,500,opt,name=tirads_5,json=tirads5,proto3" json:"tirads_5,omitempty"`
+}
+
+func (x *CreateNodeIn) Reset() {
+	*x = CreateNodeIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateNodeIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateNodeIn) ProtoMessage() {}
+
+func (x *CreateNodeIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateNodeIn.ProtoReflect.Descriptor instead.
+func (*CreateNodeIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *CreateNodeIn) GetSegments() []*CreateNodeIn_NestedSegment {
+	if x != nil {
+		return x.Segments
+	}
+	return nil
+}
+
+func (x *CreateNodeIn) GetTirads_23() float64 {
+	if x != nil {
+		return x.Tirads_23
+	}
+	return 0
+}
+
+func (x *CreateNodeIn) GetTirads_4() float64 {
+	if x != nil {
+		return x.Tirads_4
+	}
+	return 0
+}
+
+func (x *CreateNodeIn) GetTirads_5() float64 {
+	if x != nil {
+		return x.Tirads_5
+	}
+	return 0
+}
+
+type CreateNodeOut struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *CreateNodeOut) Reset() {
+	*x = CreateNodeOut{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateNodeOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateNodeOut) ProtoMessage() {}
+
+func (x *CreateNodeOut) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateNodeOut.ProtoReflect.Descriptor instead.
+func (*CreateNodeOut) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *CreateNodeOut) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeleteNodeIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *DeleteNodeIn) Reset() {
+	*x = DeleteNodeIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteNodeIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteNodeIn) ProtoMessage() {}
+
+func (x *DeleteNodeIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteNodeIn.ProtoReflect.Descriptor instead.
+func (*DeleteNodeIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *DeleteNodeIn) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type UpdateNodeIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id        string   `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+	Tirads_23 *float64 `protobuf:"fixed64,200,opt,name=tirads_23,json=tirads23,proto3,oneof" json:"tirads_23,omitempty"`
+	Tirads_4  *float64 `protobuf:"fixed64,300,opt,name=tirads_4,json=tirads4,proto3,oneof" json:"tirads_4,omitempty"`
+	Tirads_5  *float64 `protobuf:"fixed64,400,opt,name=tirads_5,json=tirads5,proto3,oneof" json:"tirads_5,omitempty"`
+}
+
+func (x *UpdateNodeIn) Reset() {
+	*x = UpdateNodeIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateNodeIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateNodeIn) ProtoMessage() {}
+
+func (x *UpdateNodeIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateNodeIn.ProtoReflect.Descriptor instead.
+func (*UpdateNodeIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *UpdateNodeIn) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateNodeIn) GetTirads_23() float64 {
+	if x != nil && x.Tirads_23 != nil {
+		return *x.Tirads_23
+	}
+	return 0
+}
+
+func (x *UpdateNodeIn) GetTirads_4() float64 {
+	if x != nil && x.Tirads_4 != nil {
+		return *x.Tirads_4
+	}
+	return 0
+}
+
+func (x *UpdateNodeIn) GetTirads_5() float64 {
+	if x != nil && x.Tirads_5 != nil {
+		return *x.Tirads_5
+	}
+	return 0
+}
+
+type UpdateNodeOut struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Node *Node `protobuf:"bytes,100,opt,name=node,proto3" json:"node,omitempty"`
+}
+
+func (x *UpdateNodeOut) Reset() {
+	*x = UpdateNodeOut{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateNodeOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateNodeOut) ProtoMessage() {}
+
+func (x *UpdateNodeOut) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateNodeOut.ProtoReflect.Descriptor instead.
+func (*UpdateNodeOut) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *UpdateNodeOut) GetNode() *Node {
+	if x != nil {
+		return x.Node
+	}
+	return nil
+}
+
+type GetImageSegmentsWithNodesIn struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,100,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *GetImageSegmentsWithNodesIn) Reset() {
+	*x = GetImageSegmentsWithNodesIn{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetImageSegmentsWithNodesIn) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetImageSegmentsWithNodesIn) ProtoMessage() {}
+
+func (x *GetImageSegmentsWithNodesIn) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetImageSegmentsWithNodesIn.ProtoReflect.Descriptor instead.
+func (*GetImageSegmentsWithNodesIn) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *GetImageSegmentsWithNodesIn) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetImageSegmentsWithNodesOut struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Nodes    []*Node    `protobuf:"bytes,100,rep,name=nodes,proto3" json:"nodes,omitempty"`
+	Segments []*Segment `protobuf:"bytes,200,rep,name=segments,proto3" json:"segments,omitempty"`
+}
+
+func (x *GetImageSegmentsWithNodesOut) Reset() {
+	*x = GetImageSegmentsWithNodesOut{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetImageSegmentsWithNodesOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetImageSegmentsWithNodesOut) ProtoMessage() {}
+
+func (x *GetImageSegmentsWithNodesOut) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetImageSegmentsWithNodesOut.ProtoReflect.Descriptor instead.
+func (*GetImageSegmentsWithNodesOut) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *GetImageSegmentsWithNodesOut) GetNodes() []*Node {
+	if x != nil {
+		return x.Nodes
+	}
+	return nil
+}
+
+func (x *GetImageSegmentsWithNodesOut) GetSegments() []*Segment {
+	if x != nil {
+		return x.Segments
+	}
+	return nil
+}
+
+type CreateNodeIn_NestedSegment struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ImageId   string  `protobuf:"bytes,300,opt,name=image_id,json=imageId,proto3" json:"image_id,omitempty"`
+	Contor    string  `protobuf:"bytes,400,opt,name=contor,proto3" json:"contor,omitempty"`
+	Tirads_23 float64 `protobuf:"fixed64,500,opt,name=tirads_23,json=tirads23,proto3" json:"tirads_23,omitempty"`
+	Tirads_4  float64 `protobuf:"fixed64,600,opt,name=tirads_4,json=tirads4,proto3" json:"tirads_4,omitempty"`
+	Tirads_5  float64 `protobuf:"fixed64,700,opt,name=tirads_5,json=tirads5,proto3" json:"tirads_5,omitempty"`
+}
+
+func (x *CreateNodeIn_NestedSegment) Reset() {
+	*x = CreateNodeIn_NestedSegment{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_proto_msgTypes[27]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateNodeIn_NestedSegment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateNodeIn_NestedSegment) ProtoMessage() {}
+
+func (x *CreateNodeIn_NestedSegment) ProtoReflect() protoreflect.Message {
+	mi := &file_service_proto_msgTypes[27]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateNodeIn_NestedSegment.ProtoReflect.Descriptor instead.
+func (*CreateNodeIn_NestedSegment) Descriptor() ([]byte, []int) {
+	return file_service_proto_rawDescGZIP(), []int{20, 0}
+}
+
+func (x *CreateNodeIn_NestedSegment) GetImageId() string {
+	if x != nil {
+		return x.ImageId
+	}
+	return ""
+}
+
+func (x *CreateNodeIn_NestedSegment) GetContor() string {
+	if x != nil {
+		return x.Contor
+	}
+	return ""
+}
+
+func (x *CreateNodeIn_NestedSegment) GetTirads_23() float64 {
+	if x != nil {
+		return x.Tirads_23
+	}
+	return 0
+}
+
+func (x *CreateNodeIn_NestedSegment) GetTirads_4() float64 {
+	if x != nil {
+		return x.Tirads_4
+	}
+	return 0
+}
+
+func (x *CreateNodeIn_NestedSegment) GetTirads_5() float64 {
+	if x != nil {
+		return x.Tirads_5
+	}
+	return 0
 }
 
 var File_service_proto protoreflect.FileDescriptor
@@ -443,7 +1678,9 @@ var file_service_proto_rawDesc = []byte{
 	0x0a, 0x70, 0x61, 0x74, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0xc8, 0x01, 0x20, 0x01,
 	0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x74, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x1c, 0x0a,
 	0x09, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0xac, 0x02, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x08, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x49, 0x64, 0x22, 0x86, 0x01, 0x0a, 0x0b,
+	0x03, 0x52, 0x08, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x49, 0x64, 0x22, 0x1e, 0x0a, 0x0c, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x4f, 0x75, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x86, 0x01, 0x0a, 0x0b,
 	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x49, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69,
 	0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x24, 0x0a, 0x0a, 0x70,
 	0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0xc8, 0x01, 0x20, 0x01, 0x28, 0x09,
@@ -454,19 +1691,162 @@ var file_service_proto_rawDesc = []byte{
 	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x0d, 0x0a, 0x0b, 0x5f, 0x70, 0x61, 0x74, 0x69, 0x65, 0x6e,
 	0x74, 0x5f, 0x69, 0x64, 0x22, 0x26, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a,
 	0x69, 0x4f, 0x75, 0x74, 0x12, 0x16, 0x0a, 0x03, 0x75, 0x7a, 0x69, 0x18, 0x64, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x04, 0x2e, 0x55, 0x7a, 0x69, 0x52, 0x03, 0x75, 0x7a, 0x69, 0x32, 0x8e, 0x01, 0x0a,
-	0x06, 0x55, 0x7a, 0x69, 0x53, 0x72, 0x76, 0x12, 0x3a, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x44, 0x65,
-	0x76, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
-	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79,
-	0x1a, 0x11, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74,
-	0x4f, 0x75, 0x74, 0x12, 0x1e, 0x0a, 0x09, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69,
-	0x12, 0x0c, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x49, 0x6e, 0x1a, 0x03,
-	0x2e, 0x49, 0x64, 0x12, 0x28, 0x0a, 0x09, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69,
-	0x12, 0x0c, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x49, 0x6e, 0x1a, 0x0d,
-	0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x4f, 0x75, 0x74, 0x42, 0x21, 0x5a,
-	0x1f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x61,
-	0x74, 0x65, 0x64, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x0b, 0x32, 0x04, 0x2e, 0x55, 0x7a, 0x69, 0x52, 0x03, 0x75, 0x7a, 0x69, 0x22, 0x1a, 0x0a, 0x08,
+	0x47, 0x65, 0x74, 0x55, 0x7a, 0x69, 0x49, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x23, 0x0a, 0x09, 0x47, 0x65, 0x74, 0x55,
+	0x7a, 0x69, 0x4f, 0x75, 0x74, 0x12, 0x16, 0x0a, 0x03, 0x75, 0x7a, 0x69, 0x18, 0x64, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x04, 0x2e, 0x55, 0x7a, 0x69, 0x52, 0x03, 0x75, 0x7a, 0x69, 0x22, 0x2c, 0x0a,
+	0x05, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x13, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0xc8,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x22, 0x27, 0x0a, 0x0e, 0x47,
+	0x65, 0x74, 0x55, 0x7a, 0x69, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x49, 0x6e, 0x12, 0x15, 0x0a,
+	0x06, 0x75, 0x7a, 0x69, 0x5f, 0x69, 0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x75,
+	0x7a, 0x69, 0x49, 0x64, 0x22, 0x31, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x55, 0x7a, 0x69, 0x49, 0x6d,
+	0x61, 0x67, 0x65, 0x73, 0x4f, 0x75, 0x74, 0x12, 0x1e, 0x0a, 0x06, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x73, 0x18, 0x64, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x06, 0x2e, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x52,
+	0x06, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x22, 0xbe, 0x01, 0x0a, 0x07, 0x53, 0x65, 0x67, 0x6d,
+	0x65, 0x6e, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x02, 0x69, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x69, 0x64, 0x18, 0xc8,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6e, 0x6f, 0x64, 0x65, 0x49, 0x64, 0x12, 0x1a, 0x0a,
+	0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x69, 0x64, 0x18, 0xac, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x06, 0x63, 0x6f, 0x6e,
+	0x74, 0x6f, 0x72, 0x18, 0x90, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x63, 0x6f, 0x6e, 0x74,
+	0x6f, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x32, 0x33, 0x18,
+	0xf4, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x32, 0x33,
+	0x12, 0x1a, 0x0a, 0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x34, 0x18, 0xd8, 0x04, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x34, 0x12, 0x1a, 0x0a, 0x08,
+	0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x35, 0x18, 0xbc, 0x05, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x35, 0x22, 0xb5, 0x01, 0x0a, 0x0f, 0x43, 0x72, 0x65,
+	0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x12, 0x17, 0x0a, 0x07,
+	0x6e, 0x6f, 0x64, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6e,
+	0x6f, 0x64, 0x65, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x69,
+	0x64, 0x18, 0xc8, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x49,
+	0x64, 0x12, 0x17, 0x0a, 0x06, 0x63, 0x6f, 0x6e, 0x74, 0x6f, 0x72, 0x18, 0xac, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x63, 0x6f, 0x6e, 0x74, 0x6f, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69,
+	0x72, 0x61, 0x64, 0x73, 0x5f, 0x32, 0x33, 0x18, 0x90, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08,
+	0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x32, 0x33, 0x12, 0x1a, 0x0a, 0x08, 0x74, 0x69, 0x72, 0x61,
+	0x64, 0x73, 0x5f, 0x34, 0x18, 0xf4, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x74, 0x69, 0x72,
+	0x61, 0x64, 0x73, 0x34, 0x12, 0x1a, 0x0a, 0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x35,
+	0x18, 0xd8, 0x04, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x35,
+	0x22, 0x22, 0x0a, 0x10, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e,
+	0x74, 0x4f, 0x75, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x02, 0x69, 0x64, 0x22, 0x21, 0x0a, 0x0f, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x65,
+	0x67, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0xd7, 0x01, 0x0a, 0x0f, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1c, 0x0a, 0x06, 0x63,
+	0x6f, 0x6e, 0x74, 0x6f, 0x72, 0x18, 0xac, 0x02, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x06,
+	0x63, 0x6f, 0x6e, 0x74, 0x6f, 0x72, 0x88, 0x01, 0x01, 0x12, 0x21, 0x0a, 0x09, 0x74, 0x69, 0x72,
+	0x61, 0x64, 0x73, 0x5f, 0x32, 0x33, 0x18, 0x90, 0x03, 0x20, 0x01, 0x28, 0x01, 0x48, 0x01, 0x52,
+	0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x32, 0x33, 0x88, 0x01, 0x01, 0x12, 0x1f, 0x0a, 0x08,
+	0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x34, 0x18, 0xf4, 0x03, 0x20, 0x01, 0x28, 0x01, 0x48,
+	0x02, 0x52, 0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x34, 0x88, 0x01, 0x01, 0x12, 0x1f, 0x0a,
+	0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x35, 0x18, 0xd8, 0x04, 0x20, 0x01, 0x28, 0x01,
+	0x48, 0x03, 0x52, 0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x35, 0x88, 0x01, 0x01, 0x42, 0x09,
+	0x0a, 0x07, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x6f, 0x72, 0x42, 0x0c, 0x0a, 0x0a, 0x5f, 0x74, 0x69,
+	0x72, 0x61, 0x64, 0x73, 0x5f, 0x32, 0x33, 0x42, 0x0b, 0x0a, 0x09, 0x5f, 0x74, 0x69, 0x72, 0x61,
+	0x64, 0x73, 0x5f, 0x34, 0x42, 0x0b, 0x0a, 0x09, 0x5f, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f,
+	0x35, 0x22, 0x36, 0x0a, 0x10, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65,
+	0x6e, 0x74, 0x4f, 0x75, 0x74, 0x12, 0x22, 0x0a, 0x07, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74,
+	0x18, 0x64, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x08, 0x2e, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74,
+	0x52, 0x07, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0x7d, 0x0a, 0x04, 0x4e, 0x6f, 0x64,
+	0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69,
+	0x64, 0x12, 0x0f, 0x0a, 0x02, 0x61, 0x69, 0x18, 0xc8, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x02,
+	0x61, 0x69, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x32, 0x33, 0x18,
+	0x90, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x32, 0x33,
+	0x12, 0x1a, 0x0a, 0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x34, 0x18, 0xf4, 0x03, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x34, 0x12, 0x1a, 0x0a, 0x08,
+	0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x35, 0x18, 0xd8, 0x04, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x35, 0x22, 0xbb, 0x02, 0x0a, 0x0c, 0x43, 0x72, 0x65,
+	0x61, 0x74, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x49, 0x6e, 0x12, 0x38, 0x0a, 0x08, 0x73, 0x65, 0x67,
+	0x6d, 0x65, 0x6e, 0x74, 0x73, 0x18, 0xc8, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x49, 0x6e, 0x2e, 0x4e, 0x65, 0x73, 0x74,
+	0x65, 0x64, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x08, 0x73, 0x65, 0x67, 0x6d, 0x65,
+	0x6e, 0x74, 0x73, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x32, 0x33,
+	0x18, 0xac, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x32,
+	0x33, 0x12, 0x1a, 0x0a, 0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x34, 0x18, 0x90, 0x03,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x34, 0x12, 0x1a, 0x0a,
+	0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x35, 0x18, 0xf4, 0x03, 0x20, 0x01, 0x28, 0x01,
+	0x52, 0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x35, 0x1a, 0x9a, 0x01, 0x0a, 0x0d, 0x4e, 0x65,
+	0x73, 0x74, 0x65, 0x64, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x69,
+	0x6d, 0x61, 0x67, 0x65, 0x5f, 0x69, 0x64, 0x18, 0xac, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x69, 0x6d, 0x61, 0x67, 0x65, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x06, 0x63, 0x6f, 0x6e, 0x74, 0x6f,
+	0x72, 0x18, 0x90, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x63, 0x6f, 0x6e, 0x74, 0x6f, 0x72,
+	0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x32, 0x33, 0x18, 0xf4, 0x03,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x32, 0x33, 0x12, 0x1a,
+	0x0a, 0x08, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x34, 0x18, 0xd8, 0x04, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x34, 0x12, 0x1a, 0x0a, 0x08, 0x74, 0x69,
+	0x72, 0x61, 0x64, 0x73, 0x5f, 0x35, 0x18, 0xbc, 0x05, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x74,
+	0x69, 0x72, 0x61, 0x64, 0x73, 0x35, 0x22, 0x1f, 0x0a, 0x0d, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x4e, 0x6f, 0x64, 0x65, 0x4f, 0x75, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x1e, 0x0a, 0x0c, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x65, 0x4e, 0x6f, 0x64, 0x65, 0x49, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0xab, 0x01, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x49, 0x6e, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x21, 0x0a, 0x09, 0x74, 0x69, 0x72, 0x61,
+	0x64, 0x73, 0x5f, 0x32, 0x33, 0x18, 0xc8, 0x01, 0x20, 0x01, 0x28, 0x01, 0x48, 0x00, 0x52, 0x08,
+	0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x32, 0x33, 0x88, 0x01, 0x01, 0x12, 0x1f, 0x0a, 0x08, 0x74,
+	0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x34, 0x18, 0xac, 0x02, 0x20, 0x01, 0x28, 0x01, 0x48, 0x01,
+	0x52, 0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x34, 0x88, 0x01, 0x01, 0x12, 0x1f, 0x0a, 0x08,
+	0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x35, 0x18, 0x90, 0x03, 0x20, 0x01, 0x28, 0x01, 0x48,
+	0x02, 0x52, 0x07, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x35, 0x88, 0x01, 0x01, 0x42, 0x0c, 0x0a,
+	0x0a, 0x5f, 0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x32, 0x33, 0x42, 0x0b, 0x0a, 0x09, 0x5f,
+	0x74, 0x69, 0x72, 0x61, 0x64, 0x73, 0x5f, 0x34, 0x42, 0x0b, 0x0a, 0x09, 0x5f, 0x74, 0x69, 0x72,
+	0x61, 0x64, 0x73, 0x5f, 0x35, 0x22, 0x2a, 0x0a, 0x0d, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4e,
+	0x6f, 0x64, 0x65, 0x4f, 0x75, 0x74, 0x12, 0x19, 0x0a, 0x04, 0x6e, 0x6f, 0x64, 0x65, 0x18, 0x64,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x05, 0x2e, 0x4e, 0x6f, 0x64, 0x65, 0x52, 0x04, 0x6e, 0x6f, 0x64,
+	0x65, 0x22, 0x2d, 0x0a, 0x1b, 0x47, 0x65, 0x74, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x53, 0x65, 0x67,
+	0x6d, 0x65, 0x6e, 0x74, 0x73, 0x57, 0x69, 0x74, 0x68, 0x4e, 0x6f, 0x64, 0x65, 0x73, 0x49, 0x6e,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64,
+	0x22, 0x62, 0x0a, 0x1c, 0x47, 0x65, 0x74, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x53, 0x65, 0x67, 0x6d,
+	0x65, 0x6e, 0x74, 0x73, 0x57, 0x69, 0x74, 0x68, 0x4e, 0x6f, 0x64, 0x65, 0x73, 0x4f, 0x75, 0x74,
+	0x12, 0x1b, 0x0a, 0x05, 0x6e, 0x6f, 0x64, 0x65, 0x73, 0x18, 0x64, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x05, 0x2e, 0x4e, 0x6f, 0x64, 0x65, 0x52, 0x05, 0x6e, 0x6f, 0x64, 0x65, 0x73, 0x12, 0x25, 0x0a,
+	0x08, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x18, 0xc8, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x08, 0x2e, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x08, 0x73, 0x65, 0x67, 0x6d,
+	0x65, 0x6e, 0x74, 0x73, 0x32, 0xfc, 0x04, 0x0a, 0x06, 0x55, 0x7a, 0x69, 0x53, 0x72, 0x76, 0x12,
+	0x3a, 0x0a, 0x0d, 0x67, 0x65, 0x74, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74,
+	0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x11, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x65,
+	0x76, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x4f, 0x75, 0x74, 0x12, 0x28, 0x0a, 0x09, 0x63,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x12, 0x0c, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x55, 0x7a, 0x69, 0x49, 0x6e, 0x1a, 0x0d, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55,
+	0x7a, 0x69, 0x4f, 0x75, 0x74, 0x12, 0x28, 0x0a, 0x09, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55,
+	0x7a, 0x69, 0x12, 0x0c, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x49, 0x6e,
+	0x1a, 0x0d, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x7a, 0x69, 0x4f, 0x75, 0x74, 0x12,
+	0x1f, 0x0a, 0x06, 0x67, 0x65, 0x74, 0x55, 0x7a, 0x69, 0x12, 0x09, 0x2e, 0x47, 0x65, 0x74, 0x55,
+	0x7a, 0x69, 0x49, 0x6e, 0x1a, 0x0a, 0x2e, 0x47, 0x65, 0x74, 0x55, 0x7a, 0x69, 0x4f, 0x75, 0x74,
+	0x12, 0x31, 0x0a, 0x0c, 0x67, 0x65, 0x74, 0x55, 0x7a, 0x69, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x73,
+	0x12, 0x0f, 0x2e, 0x47, 0x65, 0x74, 0x55, 0x7a, 0x69, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x49,
+	0x6e, 0x1a, 0x10, 0x2e, 0x47, 0x65, 0x74, 0x55, 0x7a, 0x69, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x73,
+	0x4f, 0x75, 0x74, 0x12, 0x58, 0x0a, 0x19, 0x67, 0x65, 0x74, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x53,
+	0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x57, 0x69, 0x74, 0x68, 0x4e, 0x6f, 0x64, 0x65, 0x73,
+	0x12, 0x1c, 0x2e, 0x47, 0x65, 0x74, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65,
+	0x6e, 0x74, 0x73, 0x57, 0x69, 0x74, 0x68, 0x4e, 0x6f, 0x64, 0x65, 0x73, 0x49, 0x6e, 0x1a, 0x1d,
+	0x2e, 0x47, 0x65, 0x74, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74,
+	0x73, 0x57, 0x69, 0x74, 0x68, 0x4e, 0x6f, 0x64, 0x65, 0x73, 0x4f, 0x75, 0x74, 0x12, 0x34, 0x0a,
+	0x0d, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x10,
+	0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x6e,
+	0x1a, 0x11, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74,
+	0x4f, 0x75, 0x74, 0x12, 0x39, 0x0a, 0x0d, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x65, 0x67,
+	0x6d, 0x65, 0x6e, 0x74, 0x12, 0x10, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x65, 0x67,
+	0x6d, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x12, 0x34,
+	0x0a, 0x0d, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x12,
+	0x10, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x49,
+	0x6e, 0x1a, 0x11, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e,
+	0x74, 0x4f, 0x75, 0x74, 0x12, 0x2b, 0x0a, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f,
+	0x64, 0x65, 0x12, 0x0d, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x49,
+	0x6e, 0x1a, 0x0e, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x4f, 0x75,
+	0x74, 0x12, 0x33, 0x0a, 0x0a, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x12,
+	0x0d, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x49, 0x6e, 0x1a, 0x16,
+	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
+	0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x12, 0x2b, 0x0a, 0x0a, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x4e, 0x6f, 0x64, 0x65, 0x12, 0x0d, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x64,
+	0x65, 0x49, 0x6e, 0x1a, 0x0e, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x64, 0x65,
+	0x4f, 0x75, 0x74, 0x42, 0x21, 0x5a, 0x1f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f,
+	0x67, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x74, 0x65, 0x64, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -481,31 +1861,77 @@ func file_service_proto_rawDescGZIP() []byte {
 	return file_service_proto_rawDescData
 }
 
-var file_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_service_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_service_proto_goTypes = []any{
-	(*Id)(nil),               // 0: Id
-	(*Device)(nil),           // 1: Device
-	(*GetDeviceListOut)(nil), // 2: GetDeviceListOut
-	(*Uzi)(nil),              // 3: Uzi
-	(*CreateUziIn)(nil),      // 4: CreateUziIn
-	(*UpdateUziIn)(nil),      // 5: UpdateUziIn
-	(*UpdateUziOut)(nil),     // 6: UpdateUziOut
-	(*empty.Empty)(nil),      // 7: google.protobuf.Empty
+	(*Id)(nil),                           // 0: Id
+	(*Device)(nil),                       // 1: Device
+	(*GetDeviceListOut)(nil),             // 2: GetDeviceListOut
+	(*Uzi)(nil),                          // 3: Uzi
+	(*CreateUziIn)(nil),                  // 4: CreateUziIn
+	(*CreateUziOut)(nil),                 // 5: CreateUziOut
+	(*UpdateUziIn)(nil),                  // 6: UpdateUziIn
+	(*UpdateUziOut)(nil),                 // 7: UpdateUziOut
+	(*GetUziIn)(nil),                     // 8: GetUziIn
+	(*GetUziOut)(nil),                    // 9: GetUziOut
+	(*Image)(nil),                        // 10: Image
+	(*GetUziImagesIn)(nil),               // 11: GetUziImagesIn
+	(*GetUziImagesOut)(nil),              // 12: GetUziImagesOut
+	(*Segment)(nil),                      // 13: Segment
+	(*CreateSegmentIn)(nil),              // 14: CreateSegmentIn
+	(*CreateSegmentOut)(nil),             // 15: CreateSegmentOut
+	(*DeleteSegmentIn)(nil),              // 16: DeleteSegmentIn
+	(*UpdateSegmentIn)(nil),              // 17: UpdateSegmentIn
+	(*UpdateSegmentOut)(nil),             // 18: UpdateSegmentOut
+	(*Node)(nil),                         // 19: Node
+	(*CreateNodeIn)(nil),                 // 20: CreateNodeIn
+	(*CreateNodeOut)(nil),                // 21: CreateNodeOut
+	(*DeleteNodeIn)(nil),                 // 22: DeleteNodeIn
+	(*UpdateNodeIn)(nil),                 // 23: UpdateNodeIn
+	(*UpdateNodeOut)(nil),                // 24: UpdateNodeOut
+	(*GetImageSegmentsWithNodesIn)(nil),  // 25: GetImageSegmentsWithNodesIn
+	(*GetImageSegmentsWithNodesOut)(nil), // 26: GetImageSegmentsWithNodesOut
+	(*CreateNodeIn_NestedSegment)(nil),   // 27: CreateNodeIn.NestedSegment
+	(*empty.Empty)(nil),                  // 28: google.protobuf.Empty
 }
 var file_service_proto_depIdxs = []int32{
-	1, // 0: GetDeviceListOut.devices:type_name -> Device
-	3, // 1: UpdateUziOut.uzi:type_name -> Uzi
-	7, // 2: UziSrv.GetDeviceList:input_type -> google.protobuf.Empty
-	4, // 3: UziSrv.CreateUzi:input_type -> CreateUziIn
-	5, // 4: UziSrv.UpdateUzi:input_type -> UpdateUziIn
-	2, // 5: UziSrv.GetDeviceList:output_type -> GetDeviceListOut
-	0, // 6: UziSrv.CreateUzi:output_type -> Id
-	6, // 7: UziSrv.UpdateUzi:output_type -> UpdateUziOut
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	1,  // 0: GetDeviceListOut.devices:type_name -> Device
+	3,  // 1: UpdateUziOut.uzi:type_name -> Uzi
+	3,  // 2: GetUziOut.uzi:type_name -> Uzi
+	10, // 3: GetUziImagesOut.images:type_name -> Image
+	13, // 4: UpdateSegmentOut.segment:type_name -> Segment
+	27, // 5: CreateNodeIn.segments:type_name -> CreateNodeIn.NestedSegment
+	19, // 6: UpdateNodeOut.node:type_name -> Node
+	19, // 7: GetImageSegmentsWithNodesOut.nodes:type_name -> Node
+	13, // 8: GetImageSegmentsWithNodesOut.segments:type_name -> Segment
+	28, // 9: UziSrv.getDeviceList:input_type -> google.protobuf.Empty
+	4,  // 10: UziSrv.createUzi:input_type -> CreateUziIn
+	6,  // 11: UziSrv.updateUzi:input_type -> UpdateUziIn
+	8,  // 12: UziSrv.getUzi:input_type -> GetUziIn
+	11, // 13: UziSrv.getUziImages:input_type -> GetUziImagesIn
+	25, // 14: UziSrv.getImageSegmentsWithNodes:input_type -> GetImageSegmentsWithNodesIn
+	14, // 15: UziSrv.createSegment:input_type -> CreateSegmentIn
+	16, // 16: UziSrv.deleteSegment:input_type -> DeleteSegmentIn
+	17, // 17: UziSrv.updateSegment:input_type -> UpdateSegmentIn
+	20, // 18: UziSrv.createNode:input_type -> CreateNodeIn
+	22, // 19: UziSrv.deleteNode:input_type -> DeleteNodeIn
+	23, // 20: UziSrv.updateNode:input_type -> UpdateNodeIn
+	2,  // 21: UziSrv.getDeviceList:output_type -> GetDeviceListOut
+	5,  // 22: UziSrv.createUzi:output_type -> CreateUziOut
+	7,  // 23: UziSrv.updateUzi:output_type -> UpdateUziOut
+	9,  // 24: UziSrv.getUzi:output_type -> GetUziOut
+	12, // 25: UziSrv.getUziImages:output_type -> GetUziImagesOut
+	26, // 26: UziSrv.getImageSegmentsWithNodes:output_type -> GetImageSegmentsWithNodesOut
+	15, // 27: UziSrv.createSegment:output_type -> CreateSegmentOut
+	28, // 28: UziSrv.deleteSegment:output_type -> google.protobuf.Empty
+	18, // 29: UziSrv.updateSegment:output_type -> UpdateSegmentOut
+	21, // 30: UziSrv.createNode:output_type -> CreateNodeOut
+	28, // 31: UziSrv.deleteNode:output_type -> google.protobuf.Empty
+	24, // 32: UziSrv.updateNode:output_type -> UpdateNodeOut
+	21, // [21:33] is the sub-list for method output_type
+	9,  // [9:21] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_service_proto_init() }
@@ -575,7 +2001,7 @@ func file_service_proto_init() {
 			}
 		}
 		file_service_proto_msgTypes[5].Exporter = func(v any, i int) any {
-			switch v := v.(*UpdateUziIn); i {
+			switch v := v.(*CreateUziOut); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -587,6 +2013,18 @@ func file_service_proto_init() {
 			}
 		}
 		file_service_proto_msgTypes[6].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateUziIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[7].Exporter = func(v any, i int) any {
 			switch v := v.(*UpdateUziOut); i {
 			case 0:
 				return &v.state
@@ -598,15 +2036,257 @@ func file_service_proto_init() {
 				return nil
 			}
 		}
+		file_service_proto_msgTypes[8].Exporter = func(v any, i int) any {
+			switch v := v.(*GetUziIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[9].Exporter = func(v any, i int) any {
+			switch v := v.(*GetUziOut); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[10].Exporter = func(v any, i int) any {
+			switch v := v.(*Image); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[11].Exporter = func(v any, i int) any {
+			switch v := v.(*GetUziImagesIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[12].Exporter = func(v any, i int) any {
+			switch v := v.(*GetUziImagesOut); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[13].Exporter = func(v any, i int) any {
+			switch v := v.(*Segment); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[14].Exporter = func(v any, i int) any {
+			switch v := v.(*CreateSegmentIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[15].Exporter = func(v any, i int) any {
+			switch v := v.(*CreateSegmentOut); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[16].Exporter = func(v any, i int) any {
+			switch v := v.(*DeleteSegmentIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[17].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateSegmentIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[18].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateSegmentOut); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[19].Exporter = func(v any, i int) any {
+			switch v := v.(*Node); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[20].Exporter = func(v any, i int) any {
+			switch v := v.(*CreateNodeIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[21].Exporter = func(v any, i int) any {
+			switch v := v.(*CreateNodeOut); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[22].Exporter = func(v any, i int) any {
+			switch v := v.(*DeleteNodeIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[23].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateNodeIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[24].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateNodeOut); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[25].Exporter = func(v any, i int) any {
+			switch v := v.(*GetImageSegmentsWithNodesIn); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[26].Exporter = func(v any, i int) any {
+			switch v := v.(*GetImageSegmentsWithNodesOut); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_proto_msgTypes[27].Exporter = func(v any, i int) any {
+			switch v := v.(*CreateNodeIn_NestedSegment); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
-	file_service_proto_msgTypes[5].OneofWrappers = []any{}
+	file_service_proto_msgTypes[6].OneofWrappers = []any{}
+	file_service_proto_msgTypes[17].OneofWrappers = []any{}
+	file_service_proto_msgTypes[23].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

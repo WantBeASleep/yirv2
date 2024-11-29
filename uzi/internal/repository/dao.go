@@ -10,8 +10,11 @@ import (
 
 type DAO interface {
 	daolib.DAO
-	NewDeviceQuery(context.Context) DeviceQuery
-	NewUziQuery(context.Context) UziQuery
+	NewDeviceQuery(ctx context.Context) DeviceQuery
+	NewUziQuery(ctx context.Context) UziQuery
+	NewImageQuery(ctx context.Context) ImageQuery
+	NewSegmentQuery(ctx context.Context) SegmentQuery
+	NewNodeQuery(ctx context.Context) NodeQuery
 }
 
 type dao struct {
@@ -34,4 +37,25 @@ func (d *dao) NewUziQuery(ctx context.Context) UziQuery {
 	d.NewRepo(ctx, uziQuery)
 
 	return uziQuery
+}
+
+func (d *dao) NewImageQuery(ctx context.Context) ImageQuery {
+	imageQuery := &imageQuery{}
+	d.NewRepo(ctx, imageQuery)
+
+	return imageQuery
+}
+
+func (d *dao) NewSegmentQuery(ctx context.Context) SegmentQuery {
+	segment := &segmentQuery{}
+	d.NewRepo(ctx, segment)
+
+	return segment
+}
+
+func (d *dao) NewNodeQuery(ctx context.Context) NodeQuery {
+	node := &nodeQuery{}
+	d.NewRepo(ctx, node)
+
+	return node
 }

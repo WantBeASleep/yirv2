@@ -10,10 +10,10 @@ import (
 
 type DAO interface {
 	// вернет контест с транзакцией
-	BeginTx(context.Context, ...TxOption) (txCtx context.Context, err error)
-	RollbackTx(context.Context) error
-	CommitTx(context.Context) error
-	NewRepo(context.Context, BaseQuerySetter)
+	BeginTx(ctx context.Context, opts ...TxOption) (txCtx context.Context, err error)
+	RollbackTx(ctx context.Context) error
+	CommitTx(ctx context.Context) error
+	NewRepo(ctx context.Context, querier BaseQuerySetter)
 }
 
 type daoCtxKey int

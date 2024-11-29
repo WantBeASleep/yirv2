@@ -1,5 +1,5 @@
 // TODO: сделать через zerolog
-package log
+package loglib
 
 import (
 	"context"
@@ -11,15 +11,31 @@ import (
 )
 
 type config struct {
-	dest io.Writer
+	dest  io.Writer
+	level slog.Level
 }
 
-type LogOption func(*config)
+type LopOption interface {
+	applyOpt(cfg *config)
+}
 
-func WithFileOutput(path string) LogOption {
+type logOption func(*config)
+
+func (o logOption) applyOpt(c *config) {
+	o(c)
+}
+
+func WithFileOutput(path string) LopOption {
 	f, _ := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0o666)
-	return LogOption(func(c *config) {
+	return logOption(func(c *config) {
 		c.dest = f
+	})
+}
+
+func WithDevEnv() LopOption {
+	return logOption(func(c *config) {
+		c.dest = os.Stdout
+		c.level = slog.LevelDebug
 	})
 }
 
@@ -44,13 +60,13 @@ func (h handler) Handle(ctx context.Context, r slog.Record) error {
 	return h.Handler.Handle(ctx, r)
 }
 
-func InitLogger(opts ...LogOption) {
+func InitLogger(opts ...LopOption) {
 	cfg := defaultConfig()
 	for _, o := range opts {
-		o(&cfg)
+		o.applyOpt(&cfg)
 	}
 
-	jsonHandler := slog.NewJSONHandler(cfg.dest, nil)
+	jsonHandler := slog.NewJSONHandler(cfg.dest, &slog.HandlerOptions{Level: cfg.level})
 
 	logger := slog.New(handler{Handler: jsonHandler})
 	slog.SetDefault(logger)

@@ -24,8 +24,8 @@ type Node struct {
 
 type Segment struct {
 	Id       uuid.UUID `db:"id"`
-	ImageID  uuid.UUID `db:"node_id"`
-	NodeID   uuid.UUID `db:"image_id"`
+	ImageID  uuid.UUID `db:"image_id"`
+	NodeID   uuid.UUID `db:"node_id"`
 	Contor   string    `db:"contor"`
 	Tirads23 float64   `db:"tirads_23"`
 	Tirads4  float64   `db:"tirads_4"`

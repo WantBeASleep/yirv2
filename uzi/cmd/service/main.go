@@ -8,16 +8,22 @@ import (
 
 	pkgconfig "yirv2/pkg/config"
 	"yirv2/pkg/grpclib"
-	pkglog "yirv2/pkg/log"
+	"yirv2/pkg/loglib"
 	"yirv2/uzi/internal/config"
 
 	"yirv2/uzi/internal/repository"
 
+	imagesrv "yirv2/uzi/internal/services/image"
+	nodesrv "yirv2/uzi/internal/services/node"
+	segmentsrv "yirv2/uzi/internal/services/segment"
 	uzisrv "yirv2/uzi/internal/services/uzi"
 
 	pb "yirv2/uzi/internal/generated/grpc/service"
 	grpchandler "yirv2/uzi/internal/grpc"
 	devicehandler "yirv2/uzi/internal/grpc/device"
+	imagehandler "yirv2/uzi/internal/grpc/image"
+	nodehandler "yirv2/uzi/internal/grpc/node"
+	segmenthandler "yirv2/uzi/internal/grpc/segment"
 	uzihandler "yirv2/uzi/internal/grpc/uzi"
 
 	"github.com/jmoiron/sqlx"
@@ -26,7 +32,7 @@ import (
 )
 
 const (
-	defaultCfgPath = "service.yml"
+	defaultCfgPath = "/home/wantbeasleep/yirv2/uzi/service.yml"
 )
 
 const (
@@ -39,7 +45,7 @@ func main() {
 }
 
 func run() (exitCode int) {
-	pkglog.InitLogger()
+	loglib.InitLogger(loglib.WithDevEnv())
 	cfg, err := pkgconfig.Load[config.Config](defaultCfgPath)
 	if err != nil {
 		slog.Error("init config", "err", err)
@@ -61,13 +67,22 @@ func run() (exitCode int) {
 	dao := repository.NewRepository(db)
 
 	uziSrv := uzisrv.New(dao)
+	imageSrv := imagesrv.New(dao)
+	nodeSrv := nodesrv.New(dao)
+	serviceSrv := segmentsrv.New(dao)
 
 	deviceHandler := devicehandler.New(dao)
 	uziHandler := uzihandler.New(uziSrv)
+	imageHandler := imagehandler.New(imageSrv)
+	nodeHandler := nodehandler.New(nodeSrv)
+	serviceHandler := segmenthandler.New(serviceSrv)
 
 	handler := grpchandler.New(
 		deviceHandler,
 		uziHandler,
+		imageHandler,
+		nodeHandler,
+		serviceHandler,
 	)
 
 	server := grpc.NewServer(grpc.ChainUnaryInterceptor(grpclib.ServerCallLoggerInterceptor))
@@ -79,7 +94,7 @@ func run() (exitCode int) {
 		return failExitCode
 	}
 
-	slog.Info("start serve")
+	slog.Info("start serve", slog.String("app url", cfg.App.Url))
 	if err := server.Serve(lis); err != nil {
 		slog.Error("take port", "err", err)
 		return failExitCode

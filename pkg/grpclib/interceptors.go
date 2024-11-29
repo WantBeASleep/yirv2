@@ -13,8 +13,10 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-const requestIdKey = "x-request_id"
-const methodKey = "x-method"
+const (
+	requestIdKey = "x-request_id"
+	methodKey    = "x-method"
+)
 
 func ServerCallLoggerInterceptor(
 	ctx context.Context,

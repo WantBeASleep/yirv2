@@ -7,7 +7,7 @@ import (
 )
 
 type BaseQuerySetter interface {
-	SetBaseQuery(*BaseQuery)
+	SetBaseQuery(querier *BaseQuery)
 }
 
 type BaseQuery struct {

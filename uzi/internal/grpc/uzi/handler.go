@@ -14,8 +14,9 @@ import (
 )
 
 type UziHandler interface {
-	CreateUzi(ctx context.Context, req *pb.CreateUziIn) (*pb.Id, error)
+	CreateUzi(ctx context.Context, req *pb.CreateUziIn) (*pb.CreateUziOut, error)
 	UpdateUzi(ctx context.Context, req *pb.UpdateUziIn) (*pb.UpdateUziOut, error)
+	GetUzi(ctx context.Context, in *pb.GetUziIn) (*pb.GetUziOut, error)
 }
 
 type handler struct {
@@ -30,25 +31,25 @@ func New(
 	}
 }
 
-func (h *handler) CreateUzi(ctx context.Context, req *pb.CreateUziIn) (*pb.Id, error) {
+func (h *handler) CreateUzi(ctx context.Context, in *pb.CreateUziIn) (*pb.CreateUziOut, error) {
 	uuid, err := h.uziSrv.CreateUzi(ctx, domain.Uzi{
-		Projection: req.Projection,
-		PatientID:  uuid.MustParse(req.PatientId),
-		DeviceID:   int(req.DeviceId),
+		Projection: in.Projection,
+		PatientID:  uuid.MustParse(in.PatientId),
+		DeviceID:   int(in.DeviceId),
 	})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Что то пошло не так: %s", err.Error())
 	}
 
-	return &pb.Id{Id: uuid.String()}, nil
+	return &pb.CreateUziOut{Id: uuid.String()}, nil
 }
 
-func (h *handler) UpdateUzi(ctx context.Context, req *pb.UpdateUziIn) (*pb.UpdateUziOut, error) {
+func (h *handler) UpdateUzi(ctx context.Context, in *pb.UpdateUziIn) (*pb.UpdateUziOut, error) {
 	uzi, err := h.uziSrv.UpdateUzi(ctx,
-		uuid.MustParse(req.Id),
+		uuid.MustParse(in.Id),
 		uzi.OptionalUzi{
-			Projection: req.Projection,
-			PatientID:  gtclib.Uuid.StringPToP(req.PatientId),
+			Projection: in.Projection,
+			PatientID:  gtclib.Uuid.StringPToP(in.PatientId),
 		},
 	)
 	if err != nil {
@@ -56,6 +57,17 @@ func (h *handler) UpdateUzi(ctx context.Context, req *pb.UpdateUziIn) (*pb.Updat
 	}
 
 	return &pb.UpdateUziOut{
+		Uzi: domainUziToPbUzi(&uzi),
+	}, nil
+}
+
+func (h *handler) GetUzi(ctx context.Context, in *pb.GetUziIn) (*pb.GetUziOut, error) {
+	uzi, err := h.uziSrv.GetUzi(ctx, uuid.MustParse(in.Id))
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Что то пошло не так: %s", err.Error())
+	}
+
+	return &pb.GetUziOut{
 		Uzi: domainUziToPbUzi(&uzi),
 	}, nil
 }

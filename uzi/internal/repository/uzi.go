@@ -15,6 +15,7 @@ const uziTable = "uzi"
 type UziQuery interface {
 	InsertUzi(uzi domain.Uzi) error
 	UpdateUzi(id uuid.UUID, fields map[string]any) (domain.Uzi, error)
+	GetUziByPK(id uuid.UUID) (domain.Uzi, error)
 }
 
 type uziQuery struct {
@@ -44,13 +45,29 @@ func (q *uziQuery) UpdateUzi(id uuid.UUID, fields map[string]any) (domain.Uzi, e
 		Update(uziTable).
 		SetMap(fields).
 		Where(sq.Eq{
-			"id": id.String(),
+			"id": id,
 		}).
 		Suffix("RETURNING *")
 
 	var uzi domain.Uzi
 	if err := q.Runner().Getx(q.Context(), &uzi, query); err != nil {
 		return domain.Uzi{}, fmt.Errorf("update uzi: %w", err)
+	}
+
+	return uzi, nil
+}
+
+func (q *uziQuery) GetUziByPK(id uuid.UUID) (domain.Uzi, error) {
+	query := q.QueryBuilder().
+		Select("id", "projection", "patient_id", "device_id").
+		From(uziTable).
+		Where(sq.Eq{
+			"id": id,
+		})
+
+	var uzi domain.Uzi
+	if err := q.Runner().Getx(q.Context(), &uzi, query); err != nil {
+		return domain.Uzi{}, fmt.Errorf("get uzi: %w", err)
 	}
 
 	return uzi, nil

@@ -7,8 +7,6 @@ type Config struct {
 
 type App struct {
 	Url string `yaml:"url" env:"url" env-default:"localhost:50060"`
-	// Host string `yaml:"host" env:"HOST" env-default:"localhost"`
-	// Port string `yaml:"grpc" env:"PORT" env-default:"50060"`
 }
 
 type DB struct {

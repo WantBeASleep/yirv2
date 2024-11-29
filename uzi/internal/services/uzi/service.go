@@ -13,6 +13,7 @@ import (
 type Service interface {
 	CreateUzi(context.Context, domain.Uzi) (uuid.UUID, error)
 	UpdateUzi(context.Context, uuid.UUID, OptionalUzi) (domain.Uzi, error)
+	GetUzi(ctx context.Context, id uuid.UUID) (domain.Uzi, error)
 }
 
 type service struct {
@@ -40,6 +41,15 @@ func (s *service) UpdateUzi(ctx context.Context, id uuid.UUID, patch OptionalUzi
 	uzi, err := s.dao.NewUziQuery(ctx).UpdateUzi(id, patch.Map())
 	if err != nil {
 		return domain.Uzi{}, fmt.Errorf("update uzi: %w", err)
+	}
+
+	return uzi, nil
+}
+
+func (s *service) GetUzi(ctx context.Context, id uuid.UUID) (domain.Uzi, error) {
+	uzi, err := s.dao.NewUziQuery(ctx).GetUziByPK(id)
+	if err != nil {
+		return domain.Uzi{}, fmt.Errorf("get uzi: %w", err)
 	}
 
 	return uzi, nil
