@@ -1,0 +1,11 @@
+app:
+  # TODO: сделать разные окружения
+  # env: DEV
+  url: localhost:50055
+  # TODO: глянуть зачем нужно
+  # host: localhost
+  # port: 50060
+
+db:
+  # TODO: убрать в env, в конфиге тоже
+  dsn: postgres://postgres:1234@localhost:5432/uzidb
