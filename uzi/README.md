@@ -134,5 +134,10 @@ __Kafka__
     - -> id, NodeMut
     - <- Node
 
+#### Echographics
+
+Является просто эхопризнаками узи с отношением `1:1`
+есть ручка update + получается из get'а uzi 
+
 ## TODO:
 + Keep alive
