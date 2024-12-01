@@ -2,7 +2,7 @@
 -- +goose StatementBegin
 CREATE TABLE doctor
 (
-    id       uuid         PRIMARY KEY,
+    id       uuid PRIMARY KEY,
     fullname varchar(255) NOT NULL,
     org      varchar(255) NOT NULL,
     job      varchar(255) NOT NULL,
@@ -17,13 +17,13 @@ COMMENT ON COLUMN doctor.desc IS 'Описание, опыт работы вра
 
 CREATE TABLE patient
 (
-    id          uuid         PRIMARY KEY,
-    fullName    varchar(255) NOT NULL,
-    email       varchar(255) NOT NULL,
-    policy      varchar(255) NOT NULL,
-    active      boolean      NOT NULL,
-    malignancy  boolean      NOT NULL,
-    last_uzi_date date
+    id            uuid PRIMARY KEY,
+    fullName      varchar(255) NOT NULL,
+    email         varchar(255) NOT NULL,
+    policy        varchar(255) NOT NULL,
+    active        boolean      NOT NULL,
+    malignancy    boolean      NOT NULL,
+    last_uzi_date timestamp
 );
 
 COMMENT ON TABLE patient IS 'Таблица пациентов';

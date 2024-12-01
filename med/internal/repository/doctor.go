@@ -3,10 +3,11 @@ package repository
 import (
 	"fmt"
 
+	"yirv2/med/internal/domain"
 	"yirv2/pkg/daolib"
+
 	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
-	"yirv2/med/internal/domain"
 )
 
 const doctorTable = "doctor"

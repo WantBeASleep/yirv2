@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"database/sql"
-	"errors"
 	"fmt"
 
 	"yirv2/med/internal/domain"
@@ -15,9 +13,6 @@ import (
 const cardTable = "card"
 
 type CardQuery interface {
-	InsertCard(card domain.Card) error
-	UpdateCard(card domain.Card) (domain.Card, error)
-	GetCardByPK(doctorID uuid.UUID, patientID uuid.UUID) (domain.Card, error)
 	CheckCardExists(doctorID uuid.UUID, patientID uuid.UUID) (bool, error)
 }
 
@@ -58,7 +53,7 @@ func (q *cardQuery) UpdateCard(in domain.Card) (domain.Card, error) {
 			"diagnosis": in.Diagnosis,
 		}).
 		Where(sq.Eq{
-			"doctor_id": in.DoctorID,
+			"doctor_id":  in.DoctorID,
 			"patient_id": in.PatientID,
 		}).
 		Suffix("RETURNING *")
@@ -80,7 +75,7 @@ func (q *cardQuery) GetCardByPK(doctorID uuid.UUID, patientID uuid.UUID) (domain
 		).
 		From(cardTable).
 		Where(sq.Eq{
-			"doctor_id": doctorID,
+			"doctor_id":  doctorID,
 			"patient_id": patientID,
 		})
 
@@ -95,23 +90,18 @@ func (q *cardQuery) GetCardByPK(doctorID uuid.UUID, patientID uuid.UUID) (domain
 func (q *cardQuery) CheckCardExists(doctorID uuid.UUID, patientID uuid.UUID) (bool, error) {
 	query := q.QueryBuilder().
 		Select("1").
+		Prefix("SELECT EXISTS (").
 		From(cardTable).
 		Where(sq.Eq{
-			"doctor_id": doctorID,
+			"doctor_id":  doctorID,
 			"patient_id": patientID,
-		})
+		}).
+		Suffix(")")
 
-	row, err := q.Runner().QueryRow(q.Context(), query)
-	if err != nil {
-		return false, fmt.Errorf("query row card by pk: %w", err)
+	var exists bool
+	if err := q.Runner().Getx(q.Context(), &exists, query); err != nil {
+		return false, fmt.Errorf("check card exists by pk: %w", err)
 	}
 
-	exist := 0
-	if err := row.Scan(&exist); err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return false, nil
-		}
-		return false, fmt.Errorf("scan row: %w", err)
-	}
-	return true, nil
+	return exists, nil
 }

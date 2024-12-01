@@ -1,4 +1,3 @@
-// TODO: убрать мусор отсюда сделать нормальную инициализацию
 package main
 
 import (
@@ -6,26 +5,19 @@ import (
 	"net"
 	"os"
 
+	"yirv2/med/internal/config"
 	pkgconfig "yirv2/pkg/config"
 	"yirv2/pkg/grpclib"
 	"yirv2/pkg/loglib"
-	"yirv2/uzi/internal/config"
 
-	"yirv2/uzi/internal/repository"
+	"yirv2/med/internal/repository"
 
-	imagesrv "yirv2/uzi/internal/services/image"
-	nodesrv "yirv2/uzi/internal/services/node"
-	segmentsrv "yirv2/uzi/internal/services/segment"
-	uzisrv "yirv2/uzi/internal/services/uzi"
+	patientsrv "yirv2/med/internal/services/patient"
 
-	pb "yirv2/uzi/internal/generated/grpc/service"
-	grpchandler "yirv2/uzi/internal/grpc"
-	
-	devicehandler "yirv2/uzi/internal/grpc/device"
-	imagehandler "yirv2/uzi/internal/grpc/image"
-	nodehandler "yirv2/uzi/internal/grpc/node"
-	segmenthandler "yirv2/uzi/internal/grpc/segment"
-	uzihandler "yirv2/uzi/internal/grpc/uzi"
+	pb "yirv2/med/internal/generated/grpc/service"
+	grpchandler "yirv2/med/internal/grpc"
+
+	patienthandler "yirv2/med/internal/grpc/patient"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -67,27 +59,16 @@ func run() (exitCode int) {
 
 	dao := repository.NewRepository(db)
 
-	uziSrv := uzisrv.New(dao)
-	imageSrv := imagesrv.New(dao)
-	nodeSrv := nodesrv.New(dao)
-	serviceSrv := segmentsrv.New(dao)
+	patientSrv := patientsrv.New(dao)
 
-	deviceHandler := devicehandler.New(dao)
-	uziHandler := uzihandler.New(uziSrv)
-	imageHandler := imagehandler.New(imageSrv)
-	nodeHandler := nodehandler.New(nodeSrv)
-	serviceHandler := segmenthandler.New(serviceSrv)
+	patientHandler := patienthandler.New(patientSrv)
 
 	handler := grpchandler.New(
-		deviceHandler,
-		uziHandler,
-		imageHandler,
-		nodeHandler,
-		serviceHandler,
+		patientHandler,
 	)
 
 	server := grpc.NewServer(grpc.ChainUnaryInterceptor(grpclib.ServerCallLoggerInterceptor))
-	pb.RegisterUziSrvServer(server, handler)
+	pb.RegisterMedSrvServer(server, handler)
 
 	lis, err := net.Listen("tcp", cfg.App.Url)
 	if err != nil {

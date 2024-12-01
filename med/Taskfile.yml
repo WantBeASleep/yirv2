@@ -1,11 +1,12 @@
 version: '3'
+# //TODO: убрать
 
 vars:
   VENDOR_PROTOGEN: '../vendor.protogen'
 
 env:
   GOOSE_DRIVER: postgres
-  GOOSE_DBSTRING: postgres://postgres:1234@localhost:5432/uzidb
+  GOOSE_DBSTRING: postgres://postgres:1234@localhost:5432/meddb
 
 tasks:
   codegen:
@@ -42,7 +43,6 @@ tasks:
       - task: build
       - ./bin/service
 
-  
   migration-up:
     cmds:
       - goose -dir db/migrations up

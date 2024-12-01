@@ -13,9 +13,9 @@ import (
 
 type Service interface {
 	CreatePatient(ctx context.Context, patient domain.Patient) (uuid.UUID, error)
-	UpdatePatient(ctx context.Context, doctorID uuid.UUID, id uuid.UUID, path OptionalPatient) (domain.Patient, error)
 	GetPatient(ctx context.Context, id uuid.UUID) (domain.Patient, error)
 	GetDoctorPatients(ctx context.Context, doctorID uuid.UUID) ([]domain.Patient, error)
+	UpdatePatient(ctx context.Context, doctorID uuid.UUID, patientID uuid.UUID, update UpdatePatient) (domain.Patient, error)
 }
 
 type service struct {
@@ -30,36 +30,14 @@ func New(
 	}
 }
 
+// TODO: нужно ввожить слой entity
 func (s *service) CreatePatient(ctx context.Context, patient domain.Patient) (uuid.UUID, error) {
 	patient.Id = uuid.New()
-	// TODO: нужно ввожить слой entity
 	if err := s.dao.NewPatientQuery(ctx).InsertPatient(entity.Patient{}.FromDomain(patient)); err != nil {
 		return uuid.Nil, fmt.Errorf("insert patient: %w", err)
 	}
 
 	return patient.Id, nil
-}
-
-func (s *service) UpdatePatient(
-	ctx context.Context,
-	doctorID uuid.UUID,
-	id uuid.UUID,
-	path OptionalPatient,
-) (domain.Patient, error) {
-	exists, err := s.dao.NewCardQuery(ctx).CheckCardExists(doctorID, id)
-	if err != nil {
-		return domain.Patient{}, fmt.Errorf("check existing card")
-	}
-	if !exists {
-		return domain.Patient{}, ErrNoPermission
-	}
-
-	patient, err := s.dao.NewPatientQuery(ctx).UpdatePatient(id, path.Map())
-	if err != nil {
-		return domain.Patient{}, fmt.Errorf("update patient: %w", err)
-	}
-
-	return patient, nil
 }
 
 func (s *service) GetPatient(ctx context.Context, id uuid.UUID) (domain.Patient, error) {
@@ -68,7 +46,7 @@ func (s *service) GetPatient(ctx context.Context, id uuid.UUID) (domain.Patient,
 		return domain.Patient{}, fmt.Errorf("get patient: %w", err)
 	}
 
-	return patient, err
+	return patient.ToDomain(), err
 }
 
 func (s *service) GetDoctorPatients(ctx context.Context, doctorID uuid.UUID) ([]domain.Patient, error) {
@@ -77,6 +55,37 @@ func (s *service) GetDoctorPatients(ctx context.Context, doctorID uuid.UUID) ([]
 		return nil, fmt.Errorf("get doctor patients: %w", err)
 	}
 
-	return patients, err
+	res := make([]domain.Patient, 0, len(patients))
+	for _, v := range patients {
+		res = append(res, v.ToDomain())
+	}
+	return res, nil
 }
 
+func (s *service) UpdatePatient(
+	ctx context.Context,
+	doctorID uuid.UUID,
+	patientID uuid.UUID,
+	update UpdatePatient,
+) (domain.Patient, error) {
+	exists, err := s.dao.NewCardQuery(ctx).CheckCardExists(doctorID, patientID)
+	if err != nil {
+		return domain.Patient{}, fmt.Errorf("check existing card")
+	}
+	if !exists {
+		return domain.Patient{}, fmt.Errorf("doctor doesn't have access to this card")
+	}
+
+	dbPatient, err := s.dao.NewPatientQuery(ctx).GetPatientByPK(patientID)
+	if err != nil {
+		return domain.Patient{}, fmt.Errorf("get patient: %w", err)
+	}
+	patient := dbPatient.ToDomain()
+	update.Update(&patient)
+
+	if _, err := s.dao.NewPatientQuery(ctx).UpdatePatient(entity.Patient{}.FromDomain(patient)); err != nil {
+		return domain.Patient{}, fmt.Errorf("update patient: %w", err)
+	}
+
+	return patient, nil
+}

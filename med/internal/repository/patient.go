@@ -3,20 +3,20 @@ package repository
 import (
 	"fmt"
 
-	sq "github.com/Masterminds/squirrel"
-	"github.com/google/uuid"
-	"yirv2/med/internal/domain"
 	"yirv2/med/internal/repository/entity"
 	"yirv2/pkg/daolib"
+
+	sq "github.com/Masterminds/squirrel"
+	"github.com/google/uuid"
 )
 
 const patientTable = "patient"
 
 type PatientQuery interface {
 	InsertPatient(patient entity.Patient) error
-	UpdatePatient(id uuid.UUID, fields map[string]any) (domain.Patient, error)
-	GetPatientByPK(id uuid.UUID) (domain.Patient, error)
-	GetPatientsByDoctorID(id uuid.UUID) ([]domain.Patient, error)
+	UpdatePatient(patient entity.Patient) (int64, error)
+	GetPatientByPK(id uuid.UUID) (entity.Patient, error)
+	GetPatientsByDoctorID(id uuid.UUID) ([]entity.Patient, error)
 }
 
 type patientQuery struct {
@@ -37,7 +37,7 @@ func (q *patientQuery) InsertPatient(patient entity.Patient) error {
 			"policy",
 			"active",
 			"malignancy",
-			"lastUziDate",
+			"last_uzi_date",
 		).
 		Values(
 			patient.Id,
@@ -57,24 +57,27 @@ func (q *patientQuery) InsertPatient(patient entity.Patient) error {
 	return nil
 }
 
-func (q *patientQuery) UpdatePatient(id uuid.UUID, fields map[string]any) (domain.Patient, error) {
+func (q *patientQuery) UpdatePatient(patient entity.Patient) (int64, error) {
 	query := q.QueryBuilder().
 		Update(patientTable).
-		SetMap(fields).
-		Where(sq.Eq{
-			"id": id,
+		SetMap(sq.Eq{
+			"active":        patient.Active,
+			"malignancy":    patient.Malignancy,
+			"last_uzi_date": patient.LastUziDate,
 		}).
-		Suffix("RETURNING *")
+		Where(sq.Eq{
+			"id": patient.Id,
+		})
 
-	var patient domain.Patient
-	if err := q.Runner().Getx(q.Context(), &patient, query); err != nil {
-		return domain.Patient{}, fmt.Errorf("update patient: %w", err)
+	res, err := q.Runner().Execx(q.Context(), query)
+	if err != nil {
+		return 0, fmt.Errorf("update patient: %w", err)
 	}
 
-	return patient, nil
+	return res.RowsAffected()
 }
 
-func (q *patientQuery) GetPatientByPK(id uuid.UUID) (domain.Patient, error) {
+func (q *patientQuery) GetPatientByPK(id uuid.UUID) (entity.Patient, error) {
 	query := q.QueryBuilder().
 		Select(
 			"id",
@@ -83,22 +86,22 @@ func (q *patientQuery) GetPatientByPK(id uuid.UUID) (domain.Patient, error) {
 			"policy",
 			"active",
 			"malignancy",
-			"lastUziDate",
+			"last_uzi_date",
 		).
 		From(patientTable).
 		Where(sq.Eq{
 			"id": id,
 		})
 
-	var patient domain.Patient
+	var patient entity.Patient
 	if err := q.Runner().Getx(q.Context(), &patient, query); err != nil {
-		return domain.Patient{}, fmt.Errorf("get patient: %w", err)
+		return entity.Patient{}, fmt.Errorf("get patient: %w", err)
 	}
 
 	return patient, nil
 }
 
-func (q *patientQuery) GetPatientsByDoctorID(id uuid.UUID) ([]domain.Patient, error) {
+func (q *patientQuery) GetPatientsByDoctorID(id uuid.UUID) ([]entity.Patient, error) {
 	query := q.QueryBuilder().
 		Select(
 			"patient.id",
@@ -107,7 +110,7 @@ func (q *patientQuery) GetPatientsByDoctorID(id uuid.UUID) ([]domain.Patient, er
 			"patient.policy",
 			"patient.active",
 			"patient.malignancy",
-			"patient.lastUziDate",
+			"patient.last_uzi_date",
 		).
 		From(patientTable).
 		InnerJoin("card ON card.patient_id = patient.id").
@@ -115,9 +118,9 @@ func (q *patientQuery) GetPatientsByDoctorID(id uuid.UUID) ([]domain.Patient, er
 			"card.doctor_id": id,
 		})
 
-	var patient []domain.Patient
+	var patient []entity.Patient
 	if err := q.Runner().Selectx(q.Context(), &patient, query); err != nil {
-		return nil, fmt.Errorf("get patient: %w", err)
+		return nil, fmt.Errorf("get patients by doctor id: %w", err)
 	}
 
 	return patient, nil

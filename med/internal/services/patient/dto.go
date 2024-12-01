@@ -1,24 +1,25 @@
 package patient
 
-import "time"
+import (
+	"time"
 
-type OptionalPatient struct {
+	"yirv2/med/internal/domain"
+)
+
+type UpdatePatient struct {
 	Active      *bool
 	Malignancy  *bool
 	LastUziDate *time.Time
 }
 
-func (u OptionalPatient) Map() map[string]any {
-	res := map[string]any{}
+func (u UpdatePatient) Update(d *domain.Patient) {
 	if u.Active != nil {
-		res["active"] = *u.Active
+		d.Active = *u.Active
 	}
 	if u.Malignancy != nil {
-		res["malignancy"] = *u.Malignancy
+		d.Malignancy = *u.Malignancy
 	}
 	if u.LastUziDate != nil {
-		res["last_uzi_date"] = *u.LastUziDate
+		d.LastUziDate = u.LastUziDate
 	}
-
-	return res
 }
