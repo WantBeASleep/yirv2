@@ -24,6 +24,7 @@ const (
 	UziSrv_GetDeviceList_FullMethodName             = "/UziSrv/getDeviceList"
 	UziSrv_CreateUzi_FullMethodName                 = "/UziSrv/createUzi"
 	UziSrv_UpdateUzi_FullMethodName                 = "/UziSrv/updateUzi"
+	UziSrv_UpdateEchographic_FullMethodName         = "/UziSrv/updateEchographic"
 	UziSrv_GetUzi_FullMethodName                    = "/UziSrv/getUzi"
 	UziSrv_GetUziImages_FullMethodName              = "/UziSrv/getUziImages"
 	UziSrv_GetImageSegmentsWithNodes_FullMethodName = "/UziSrv/getImageSegmentsWithNodes"
@@ -42,6 +43,7 @@ type UziSrvClient interface {
 	GetDeviceList(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GetDeviceListOut, error)
 	CreateUzi(ctx context.Context, in *CreateUziIn, opts ...grpc.CallOption) (*CreateUziOut, error)
 	UpdateUzi(ctx context.Context, in *UpdateUziIn, opts ...grpc.CallOption) (*UpdateUziOut, error)
+	UpdateEchographic(ctx context.Context, in *UpdateEchographicIn, opts ...grpc.CallOption) (*UpdateEchographicOut, error)
 	GetUzi(ctx context.Context, in *GetUziIn, opts ...grpc.CallOption) (*GetUziOut, error)
 	GetUziImages(ctx context.Context, in *GetUziImagesIn, opts ...grpc.CallOption) (*GetUziImagesOut, error)
 	GetImageSegmentsWithNodes(ctx context.Context, in *GetImageSegmentsWithNodesIn, opts ...grpc.CallOption) (*GetImageSegmentsWithNodesOut, error)
@@ -85,6 +87,16 @@ func (c *uziSrvClient) UpdateUzi(ctx context.Context, in *UpdateUziIn, opts ...g
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateUziOut)
 	err := c.cc.Invoke(ctx, UziSrv_UpdateUzi_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *uziSrvClient) UpdateEchographic(ctx context.Context, in *UpdateEchographicIn, opts ...grpc.CallOption) (*UpdateEchographicOut, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateEchographicOut)
+	err := c.cc.Invoke(ctx, UziSrv_UpdateEchographic_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -188,6 +200,7 @@ type UziSrvServer interface {
 	GetDeviceList(context.Context, *empty.Empty) (*GetDeviceListOut, error)
 	CreateUzi(context.Context, *CreateUziIn) (*CreateUziOut, error)
 	UpdateUzi(context.Context, *UpdateUziIn) (*UpdateUziOut, error)
+	UpdateEchographic(context.Context, *UpdateEchographicIn) (*UpdateEchographicOut, error)
 	GetUzi(context.Context, *GetUziIn) (*GetUziOut, error)
 	GetUziImages(context.Context, *GetUziImagesIn) (*GetUziImagesOut, error)
 	GetImageSegmentsWithNodes(context.Context, *GetImageSegmentsWithNodesIn) (*GetImageSegmentsWithNodesOut, error)
@@ -215,6 +228,9 @@ func (UnimplementedUziSrvServer) CreateUzi(context.Context, *CreateUziIn) (*Crea
 }
 func (UnimplementedUziSrvServer) UpdateUzi(context.Context, *UpdateUziIn) (*UpdateUziOut, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUzi not implemented")
+}
+func (UnimplementedUziSrvServer) UpdateEchographic(context.Context, *UpdateEchographicIn) (*UpdateEchographicOut, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateEchographic not implemented")
 }
 func (UnimplementedUziSrvServer) GetUzi(context.Context, *GetUziIn) (*GetUziOut, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUzi not implemented")
@@ -314,6 +330,24 @@ func _UziSrv_UpdateUzi_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UziSrvServer).UpdateUzi(ctx, req.(*UpdateUziIn))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UziSrv_UpdateEchographic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateEchographicIn)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UziSrvServer).UpdateEchographic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UziSrv_UpdateEchographic_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UziSrvServer).UpdateEchographic(ctx, req.(*UpdateEchographicIn))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -498,6 +532,10 @@ var UziSrv_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "updateUzi",
 			Handler:    _UziSrv_UpdateUzi_Handler,
+		},
+		{
+			MethodName: "updateEchographic",
+			Handler:    _UziSrv_UpdateEchographic_Handler,
 		},
 		{
 			MethodName: "getUzi",

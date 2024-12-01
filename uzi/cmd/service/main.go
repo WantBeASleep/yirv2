@@ -32,7 +32,7 @@ import (
 )
 
 const (
-	defaultCfgPath = "uzi/service.yml"
+	defaultCfgPath = "service.yml"
 )
 
 const (

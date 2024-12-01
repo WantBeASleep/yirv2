@@ -15,6 +15,7 @@ type DAO interface {
 	NewImageQuery(ctx context.Context) ImageQuery
 	NewSegmentQuery(ctx context.Context) SegmentQuery
 	NewNodeQuery(ctx context.Context) NodeQuery
+	NewEchographicQuery(ctx context.Context) EchographicQuery
 }
 
 type dao struct {
@@ -58,4 +59,11 @@ func (d *dao) NewNodeQuery(ctx context.Context) NodeQuery {
 	d.NewRepo(ctx, node)
 
 	return node
+}
+
+func (d *dao) NewEchographicQuery(ctx context.Context) EchographicQuery {
+	echographic := &echographicQuery{}
+	d.NewRepo(ctx, echographic)
+
+	return echographic
 }

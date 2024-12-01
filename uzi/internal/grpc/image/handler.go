@@ -49,6 +49,7 @@ func (h *handler) GetUziImages(ctx context.Context, in *pb.GetUziImagesIn) (*pb.
 	return &out, nil
 }
 
+// TODO: вынести это в сегменты или ноды, однозначно не в image
 func (h *handler) GetImageSegmentsWithNodes(ctx context.Context, in *pb.GetImageSegmentsWithNodesIn) (*pb.GetImageSegmentsWithNodesOut, error) {
 	nodes, segments, err := h.imageSrv.GetImageSegmentsWithNodes(ctx, uuid.MustParse(in.Id))
 	if err != nil {

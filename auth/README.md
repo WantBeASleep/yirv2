@@ -1,138 +1,33 @@
-# Uzi service
+# Auth сервис
 
-цель сервиса - хранение отношений между узлами сегментами картинками в узи. Также сервис ответственнен за разбиение узи на подкартинки
+Основная цель сервиса - обеспечить пользователя jwt токеном, для аунтентификации и авторизации.
+_В будующем можно накрутить сюда систему ролей_
 
-## Сущности
+Используется _jwt_, шифрования по схеме RS256
+jwt : header, payload, signature
+private key: header, payload --> signature
+public key: signature --> header, payload
 
-Представлены на картинке: 
-![uzi_db](docs/assets/uzi_db.png)
+таким образом только наш сервис умеет создавать ключи, остальные лиш проверять что они были выданны им
 
 ## Tech
 
-### Сущности ручки
+### Сущности их отношеня и ручки
 
-! _Пути для ручек - именование gRPC методов_
+#### User
+* id _соответствует с id мед работна_
+* email 
+* password _в захешированным виде_
+* rtw _refresh token word_
 
-#### Device
-
-Структура:
-* id
-* name
-
-Обозначения:
-    - device: id, name
-
-+ /getDeviceList 
-    - <- []device
-
-+ /createDevice _private_ _testing_
-    - -> name
+/register
+    - -> email, password
     - <- id
 
-#### Uzi
+/login
+    - -> email, password
+    - <- access_token, refresh_token
 
-Структура:
-* id
-* projection
-* patient_id
-* device_id
-
-Обозначения:
-    - Uzi: id, projection, patient_id, device_id
-    - CreateUziReq: projection, patient_id, device_id
-    - UziMut: projection, patient_id
-
-+ /createUzi
-    - -> CreateUziReq
-    - <- id
-
-+ /updateUzi 
-    - -> id + UziMut
-    - <- Uzi
-
-+ /getUzi
-    - -> id
-    - <- Uzi
-
-#### Image
-
-Структура:
-* id
-* page
-* uzi_id
-
-Обозначения:
-    - image: id, page
-
-+ /getUziImages
-    - -> uzi_id
-    - <- []image
-
-+ /getNodesWithSegmentsOnImage
-    - -> id
-    - <- []node{id, ai, tirads_23, tirads_4, tirads_5}, []segments{id, node_id, image_id, contor, tirads_23, tirads_4, tirads_5}
-
-__Kafka__
-
-+ uziUploaded
-    - -> uzi_id
-        * Выгрузить из S3
-        * Split картинки
-        * Загрузка каждой в S3
-        * Сохранение в бд
-        * Написание в event uziSplitted
-            - -> uzi_id, []image_id
-
-#### Segment
-Структура:
-* id
-* node_id
-* image_id
-* contor
-* tirads_23
-* tirads_4
-* tirads_5
-
-Обозначения:
-    - Segment: id, node_id, image_id, contor, tirads_23, tirads_4, tirads_5
-    - AddSegmentReq: node_id, image_id, contor, tirads_23, tirads_4, tirads_5
-    - SegmentMut: tirads_23, tirads_4, tirads_5
-
-+ /addSegment
-    - -> AddSegmentReq
-    - <- id
-
-+ /delSegment
-    - -> id
-
-+ /updateSegment
-    - -> id, SegmentMut
-    - <- Segment
-
-
-#### Node
-Структура:
-* id
-* ai
-* tirads_23
-* tirads_4
-* tirads_5
-
-Обозначения:
-    - Node: id, ai, tirads_23, tirads_4, tirads_5
-    - CreateNode: id, ai, tirads_23, tirads_4, tirads_5, []NestedToNodeSegment: image_id, contor, tirads_23, tirads_4, tirads_5
-    - NodeMut: tirads_23, tirads_4, tirads_5
-
-+ /createNode
-    - -> CreateNode
-    - <- id
-
-+ /delNode
-    - -> id
-
-+ /updateNode
-    - -> id, NodeMut
-    - <- Node
-
-## TODO:
-+ Keep alive
+/refresh
+    - -> refresh_token
+    - <- access_token

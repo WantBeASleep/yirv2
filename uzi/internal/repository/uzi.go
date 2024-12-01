@@ -29,8 +29,8 @@ func (q *uziQuery) SetBaseQuery(baseQuery *daolib.BaseQuery) {
 func (q *uziQuery) InsertUzi(uzi domain.Uzi) error {
 	query := q.QueryBuilder().
 		Insert(uziTable).
-		Columns("id", "projection", "patient_id", "device_id").
-		Values(uzi.Id, uzi.Projection, uzi.PatientID, uzi.DeviceID)
+		Columns("id", "projection", "checked", "patient_id", "device_id", "create_at").
+		Values(uzi.Id, uzi.Projection, uzi.Checked, uzi.PatientID, uzi.DeviceID, uzi.CreateAt)
 
 	_, err := q.Runner().Execx(q.Context(), query)
 	if err != nil {
@@ -59,7 +59,7 @@ func (q *uziQuery) UpdateUzi(id uuid.UUID, fields map[string]any) (domain.Uzi, e
 
 func (q *uziQuery) GetUziByPK(id uuid.UUID) (domain.Uzi, error) {
 	query := q.QueryBuilder().
-		Select("id", "projection", "patient_id", "device_id").
+		Select("id", "projection", "checked", "patient_id", "device_id", "create_at").
 		From(uziTable).
 		Where(sq.Eq{
 			"id": id,
