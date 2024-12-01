@@ -14,9 +14,9 @@ const patientTable = "patient"
 
 type PatientQuery interface {
 	InsertPatient(patient entity.Patient) error
-	UpdatePatient(patient entity.Patient) (int64, error)
 	GetPatientByPK(id uuid.UUID) (entity.Patient, error)
 	GetPatientsByDoctorID(id uuid.UUID) ([]entity.Patient, error)
+	UpdatePatient(patient entity.Patient) (int64, error)
 }
 
 type patientQuery struct {
@@ -55,26 +55,6 @@ func (q *patientQuery) InsertPatient(patient entity.Patient) error {
 	}
 
 	return nil
-}
-
-func (q *patientQuery) UpdatePatient(patient entity.Patient) (int64, error) {
-	query := q.QueryBuilder().
-		Update(patientTable).
-		SetMap(sq.Eq{
-			"active":        patient.Active,
-			"malignancy":    patient.Malignancy,
-			"last_uzi_date": patient.LastUziDate,
-		}).
-		Where(sq.Eq{
-			"id": patient.Id,
-		})
-
-	res, err := q.Runner().Execx(q.Context(), query)
-	if err != nil {
-		return 0, fmt.Errorf("update patient: %w", err)
-	}
-
-	return res.RowsAffected()
 }
 
 func (q *patientQuery) GetPatientByPK(id uuid.UUID) (entity.Patient, error) {
@@ -124,4 +104,24 @@ func (q *patientQuery) GetPatientsByDoctorID(id uuid.UUID) ([]entity.Patient, er
 	}
 
 	return patient, nil
+}
+
+func (q *patientQuery) UpdatePatient(patient entity.Patient) (int64, error) {
+	query := q.QueryBuilder().
+		Update(patientTable).
+		SetMap(sq.Eq{
+			"active":        patient.Active,
+			"malignancy":    patient.Malignancy,
+			"last_uzi_date": patient.LastUziDate,
+		}).
+		Where(sq.Eq{
+			"id": patient.Id,
+		})
+
+	res, err := q.Runner().Execx(q.Context(), query)
+	if err != nil {
+		return 0, fmt.Errorf("update patient: %w", err)
+	}
+
+	return res.RowsAffected()
 }

@@ -1,22 +1,23 @@
 package doctor
 
-type OptionalDoctor struct {
+import (
+	"yirv2/med/internal/domain"
+)
+
+type UpdateDoctor struct {
 	Org  *string
 	Job  *string
 	Desc *string
 }
 
-func (u OptionalDoctor) Map() map[string]any {
-	res := map[string]any{}
+func (u UpdateDoctor) Update(d *domain.Doctor) {
 	if u.Org != nil {
-		res["org"] = *u.Org
+		d.Org = *u.Org
 	}
 	if u.Job != nil {
-		res["job"] = *u.Job
+		d.Job = *u.Job
 	}
 	if u.Desc != nil {
-		res["desc"] = *u.Desc
+		d.Desc = u.Desc
 	}
-
-	return res
 }

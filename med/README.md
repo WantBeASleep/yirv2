@@ -83,7 +83,6 @@ __РУЧКА НЕ ПРИВЯЗЫВАЕТ ПАЦИЕНТА К ДОКТУРУ, Д�
     - -> fullname, email, policy, active, malignancy
     - <- patient
 
-__PUT__
 + /updatePatient
     - -> id, doctor_id, active, malignancy
     - <- patient

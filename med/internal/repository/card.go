@@ -3,7 +3,7 @@ package repository
 import (
 	"fmt"
 
-	"yirv2/med/internal/domain"
+	"yirv2/med/internal/repository/entity"
 	"yirv2/pkg/daolib"
 
 	sq "github.com/Masterminds/squirrel"
@@ -13,7 +13,10 @@ import (
 const cardTable = "card"
 
 type CardQuery interface {
+	InsertCard(card entity.Card) error
+	GetCardByPK(doctorID uuid.UUID, patientID uuid.UUID) (entity.Card, error)
 	CheckCardExists(doctorID uuid.UUID, patientID uuid.UUID) (bool, error)
+	UpdateCard(card entity.Card) (int64, error)
 }
 
 type cardQuery struct {
@@ -24,7 +27,7 @@ func (q *cardQuery) SetBaseQuery(baseQuery *daolib.BaseQuery) {
 	q.BaseQuery = baseQuery
 }
 
-func (q *cardQuery) InsertCard(card domain.Card) error {
+func (q *cardQuery) InsertCard(card entity.Card) error {
 	query := q.QueryBuilder().
 		Insert(cardTable).
 		Columns(
@@ -46,27 +49,7 @@ func (q *cardQuery) InsertCard(card domain.Card) error {
 	return nil
 }
 
-func (q *cardQuery) UpdateCard(in domain.Card) (domain.Card, error) {
-	query := q.QueryBuilder().
-		Update(cardTable).
-		SetMap(map[string]interface{}{
-			"diagnosis": in.Diagnosis,
-		}).
-		Where(sq.Eq{
-			"doctor_id":  in.DoctorID,
-			"patient_id": in.PatientID,
-		}).
-		Suffix("RETURNING *")
-
-	var card domain.Card
-	if err := q.Runner().Getx(q.Context(), &card, query); err != nil {
-		return domain.Card{}, fmt.Errorf("update card: %w", err)
-	}
-
-	return card, nil
-}
-
-func (q *cardQuery) GetCardByPK(doctorID uuid.UUID, patientID uuid.UUID) (domain.Card, error) {
+func (q *cardQuery) GetCardByPK(doctorID uuid.UUID, patientID uuid.UUID) (entity.Card, error) {
 	query := q.QueryBuilder().
 		Select(
 			"doctor_id",
@@ -79,9 +62,9 @@ func (q *cardQuery) GetCardByPK(doctorID uuid.UUID, patientID uuid.UUID) (domain
 			"patient_id": patientID,
 		})
 
-	var card domain.Card
+	var card entity.Card
 	if err := q.Runner().Getx(q.Context(), &card, query); err != nil {
-		return domain.Card{}, fmt.Errorf("get card: %w", err)
+		return entity.Card{}, fmt.Errorf("get card: %w", err)
 	}
 
 	return card, nil
@@ -104,4 +87,23 @@ func (q *cardQuery) CheckCardExists(doctorID uuid.UUID, patientID uuid.UUID) (bo
 	}
 
 	return exists, nil
+}
+
+func (q *cardQuery) UpdateCard(card entity.Card) (int64, error) {
+	query := q.QueryBuilder().
+		Update(cardTable).
+		SetMap(sq.Eq{
+			"diagnosis": card.Diagnosis,
+		}).
+		Where(sq.Eq{
+			"doctor_id":  card.DoctorID,
+			"patient_id": card.PatientID,
+		})
+
+	res, err := q.Runner().Execx(q.Context(), query)
+	if err != nil {
+		return 0, fmt.Errorf("update card: %w", err)
+	}
+
+	return res.RowsAffected()
 }

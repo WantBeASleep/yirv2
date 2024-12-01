@@ -20,7 +20,7 @@ import (
 
 	pb "yirv2/uzi/internal/generated/grpc/service"
 	grpchandler "yirv2/uzi/internal/grpc"
-	
+
 	devicehandler "yirv2/uzi/internal/grpc/device"
 	imagehandler "yirv2/uzi/internal/grpc/image"
 	nodehandler "yirv2/uzi/internal/grpc/node"

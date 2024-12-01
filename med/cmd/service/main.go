@@ -12,11 +12,15 @@ import (
 
 	"yirv2/med/internal/repository"
 
+	cardsrv "yirv2/med/internal/services/card"
+	doctorsrv "yirv2/med/internal/services/doctor"
 	patientsrv "yirv2/med/internal/services/patient"
 
 	pb "yirv2/med/internal/generated/grpc/service"
 	grpchandler "yirv2/med/internal/grpc"
 
+	cardhandler "yirv2/med/internal/grpc/card"
+	doctorhandler "yirv2/med/internal/grpc/doctor"
 	patienthandler "yirv2/med/internal/grpc/patient"
 
 	"github.com/jmoiron/sqlx"
@@ -60,11 +64,17 @@ func run() (exitCode int) {
 	dao := repository.NewRepository(db)
 
 	patientSrv := patientsrv.New(dao)
+	doctorSrv := doctorsrv.New(dao)
+	cardSrv := cardsrv.New(dao)
 
 	patientHandler := patienthandler.New(patientSrv)
+	doctorHandler := doctorhandler.New(doctorSrv)
+	cardHandler := cardhandler.New(cardSrv)
 
 	handler := grpchandler.New(
 		patientHandler,
+		doctorHandler,
+		cardHandler,
 	)
 
 	server := grpc.NewServer(grpc.ChainUnaryInterceptor(grpclib.ServerCallLoggerInterceptor))

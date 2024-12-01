@@ -3,7 +3,7 @@ package repository
 import (
 	"fmt"
 
-	"yirv2/med/internal/domain"
+	"yirv2/med/internal/repository/entity"
 	"yirv2/pkg/daolib"
 
 	sq "github.com/Masterminds/squirrel"
@@ -13,9 +13,9 @@ import (
 const doctorTable = "doctor"
 
 type DoctorQuery interface {
-	InsertDoctor(doctor domain.Doctor) error
-	UpdateUzi(id uuid.UUID, fields map[string]any) (domain.Doctor, error)
-	GetDoctorByPK(id uuid.UUID) (domain.Doctor, error)
+	InsertDoctor(doctor entity.Doctor) error
+	GetDoctorByPK(id uuid.UUID) (entity.Doctor, error)
+	UpdateDoctor(doctor entity.Doctor) (int64, error)
 }
 
 type doctorQuery struct {
@@ -26,11 +26,23 @@ func (q *doctorQuery) SetBaseQuery(baseQuery *daolib.BaseQuery) {
 	q.BaseQuery = baseQuery
 }
 
-func (q *doctorQuery) InsertDoctor(doctor domain.Doctor) error {
+func (q *doctorQuery) InsertDoctor(doctor entity.Doctor) error {
 	query := q.QueryBuilder().
 		Insert(doctorTable).
-		Columns("id", "fullname", "org", "job", "desc").
-		Values(doctor.Id, doctor.FullName, doctor.Org, doctor.Job, doctor.Desc)
+		Columns(
+			"id",
+			"fullname",
+			"org",
+			"job",
+			"\"desc\"",
+		).
+		Values(
+			doctor.Id,
+			doctor.FullName,
+			doctor.Org,
+			doctor.Job,
+			doctor.Desc,
+		)
 
 	_, err := q.Runner().Execx(q.Context(), query)
 	if err != nil {
@@ -40,35 +52,44 @@ func (q *doctorQuery) InsertDoctor(doctor domain.Doctor) error {
 	return nil
 }
 
-func (q *doctorQuery) UpdateUzi(id uuid.UUID, fields map[string]any) (domain.Doctor, error) {
+func (q *doctorQuery) GetDoctorByPK(id uuid.UUID) (entity.Doctor, error) {
 	query := q.QueryBuilder().
-		Update(doctorTable).
-		SetMap(fields).
-		Where(sq.Eq{
-			"id": id,
-		}).
-		Suffix("RETURNING *")
-
-	var doctor domain.Doctor
-	if err := q.Runner().Getx(q.Context(), &doctor, query); err != nil {
-		return domain.Doctor{}, fmt.Errorf("update doctor: %w", err)
-	}
-
-	return doctor, nil
-}
-
-func (q *doctorQuery) GetDoctorByPK(id uuid.UUID) (domain.Doctor, error) {
-	query := q.QueryBuilder().
-		Select("id", "fullname", "org", "job", "desc").
+		Select(
+			"id",
+			"fullname",
+			"org",
+			"job",
+			"\"desc\"",
+		).
 		From(doctorTable).
 		Where(sq.Eq{
 			"id": id,
 		})
 
-	var doctor domain.Doctor
+	var doctor entity.Doctor
 	if err := q.Runner().Getx(q.Context(), &doctor, query); err != nil {
-		return domain.Doctor{}, fmt.Errorf("get doctor: %w", err)
+		return entity.Doctor{}, fmt.Errorf("get doctor: %w", err)
 	}
 
 	return doctor, nil
+}
+
+func (q *doctorQuery) UpdateDoctor(doctor entity.Doctor) (int64, error) {
+	query := q.QueryBuilder().
+		Update(doctorTable).
+		SetMap(sq.Eq{
+			"org":      doctor.Org,
+			"job":      doctor.Job,
+			"\"desc\"": doctor.Desc,
+		}).
+		Where(sq.Eq{
+			"id": doctor.Id,
+		})
+
+	res, err := q.Runner().Execx(q.Context(), query)
+	if err != nil {
+		return 0, fmt.Errorf("update doctor: %w", err)
+	}
+
+	return res.RowsAffected()
 }

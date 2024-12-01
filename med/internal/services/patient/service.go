@@ -76,11 +76,10 @@ func (s *service) UpdatePatient(
 		return domain.Patient{}, fmt.Errorf("doctor doesn't have access to this card")
 	}
 
-	dbPatient, err := s.dao.NewPatientQuery(ctx).GetPatientByPK(patientID)
+	patient, err := s.GetPatient(ctx, patientID)
 	if err != nil {
 		return domain.Patient{}, fmt.Errorf("get patient: %w", err)
 	}
-	patient := dbPatient.ToDomain()
 	update.Update(&patient)
 
 	if _, err := s.dao.NewPatientQuery(ctx).UpdatePatient(entity.Patient{}.FromDomain(patient)); err != nil {

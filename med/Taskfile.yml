@@ -1,5 +1,5 @@
 version: '3'
-# //TODO: убрать
+# //TODO: убрать мусор отсюдава
 
 vars:
   VENDOR_PROTOGEN: '../vendor.protogen'
