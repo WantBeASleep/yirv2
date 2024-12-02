@@ -6,10 +6,12 @@ import (
 	"yirv2/pkg/daolib"
 
 	"github.com/jmoiron/sqlx"
+	minio "github.com/minio/minio-go/v7"
 )
 
 type DAO interface {
 	daolib.DAO
+	NewFileRepo() FileRepo
 	NewDeviceQuery(ctx context.Context) DeviceQuery
 	NewUziQuery(ctx context.Context) UziQuery
 	NewImageQuery(ctx context.Context) ImageQuery
@@ -20,12 +22,28 @@ type DAO interface {
 
 type dao struct {
 	daolib.DAO
+
+	s3       minio.Client
+	s3bucket string
 }
 
-func NewRepository(psql *sqlx.DB) DAO {
-	return &dao{DAO: daolib.NewDao(psql)}
+func NewRepository(psql *sqlx.DB, s3 minio.Client, s3bucket string) DAO {
+	return &dao{
+		DAO:      daolib.NewDao(psql),
+		s3:       s3,
+		s3bucket: s3bucket,
+	}
 }
 
+// SS3
+func (d *dao) NewFileRepo() FileRepo {
+	return &fileRepo{
+		s3:     d.s3,
+		bucket: d.s3bucket,
+	}
+}
+
+// POSTNIGRES
 func (d *dao) NewDeviceQuery(ctx context.Context) DeviceQuery {
 	deviceQuery := &deviceQuery{}
 	d.NewRepo(ctx, deviceQuery)

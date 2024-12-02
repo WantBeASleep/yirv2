@@ -13,6 +13,7 @@ import (
 const imageTable = "image"
 
 type ImageQuery interface {
+	InsertImages(images []entity.Image) error
 	GetImagesByUziID(uziID uuid.UUID) ([]entity.Image, error)
 }
 
@@ -22,6 +23,31 @@ type imageQuery struct {
 
 func (q *imageQuery) SetBaseQuery(baseQuery *daolib.BaseQuery) {
 	q.BaseQuery = baseQuery
+}
+
+func (q *imageQuery) InsertImages(images []entity.Image) error {
+	query := q.QueryBuilder().
+		Insert(imageTable).
+		Columns(
+			"id",
+			"uzi_id",
+			"page",
+		)
+
+	for _, v := range images {
+		query = query.Values(
+			v.Id,
+			v.UziID,
+			v.Page,
+		)
+	}
+
+	_, err := q.Runner().Execx(q.Context(), query)
+	if err != nil {
+		return fmt.Errorf("insert node: %w", err)
+	}
+
+	return err
 }
 
 func (q *imageQuery) GetImagesByUziID(uziID uuid.UUID) ([]entity.Image, error) {

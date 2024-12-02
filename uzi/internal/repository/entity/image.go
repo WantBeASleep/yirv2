@@ -7,21 +7,24 @@ import (
 )
 
 type Image struct {
-	Id   uuid.UUID `db:"id"`
-	Page int       `db:"page"`
+	Id    uuid.UUID `db:"id"`
+	UziID uuid.UUID `db:"uzi_id"`
+	Page  int       `db:"page"`
 }
 
 func (Image) FromDomain(d domain.Image) Image {
 	return Image{
-		Id:   d.Id,
-		Page: d.Page,
+		Id:    d.Id,
+		UziID: d.UziID,
+		Page:  d.Page,
 	}
 }
 
 func (d Image) ToDomain() domain.Image {
 	return domain.Image{
-		Id:   d.Id,
-		Page: d.Page,
+		Id:    d.Id,
+		UziID: d.UziID,
+		Page:  d.Page,
 	}
 }
 

@@ -16,8 +16,9 @@ type Uzi struct {
 }
 
 type Image struct {
-	Id   uuid.UUID
-	Page int
+	Id    uuid.UUID
+	UziID uuid.UUID
+	Page  int
 }
 
 type Node struct {
