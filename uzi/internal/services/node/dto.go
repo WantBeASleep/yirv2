@@ -1,23 +1,22 @@
 package node
 
+import "yirv2/uzi/internal/domain"
+
 // TODO: починить баг при запросе со всеми полями nil
-type OptionalNode struct {
+type UpdateNode struct {
 	Tirads23 *float64
 	Tirads4  *float64
 	Tirads5  *float64
 }
 
-func (u OptionalNode) Map() map[string]any {
-	res := map[string]any{}
+func (u UpdateNode) Update(d *domain.Node) {
 	if u.Tirads23 != nil {
-		res["tirads_23"] = *u.Tirads23
+		d.Tirads23 = *u.Tirads23
 	}
 	if u.Tirads4 != nil {
-		res["tirads_4"] = *u.Tirads4
+		d.Tirads4 = *u.Tirads4
 	}
 	if u.Tirads5 != nil {
-		res["tirads_5"] = *u.Tirads5
+		d.Tirads5 = *u.Tirads5
 	}
-
-	return res
 }

@@ -66,6 +66,67 @@ __CARDS - СВЯЗЬ МЕЖДУ ДОКТОРОМ И ПАЦИЕНТОМ, ПОНЯ
     - вызовет med /getCard
 
 
-+ POST /uzi/uzi
+//TODO: вопрос, может ли врач, если это не его пациент загружать снимок?
+//TODO: если нет, сделать валидацию
++ POST /uzi/uzis
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /createUzi
+    - загружит в s3 узи
+    - отправит ивент в брокер
+
++ PATCH /uzi/uzis/{id}
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /updateUzi
+
++ PATCH /uzi/echographics/{id}
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /updateEchographic
+
++ GET /uzi/uzis/{id}
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /getUzi
+
++ GET /uzi/uzis/{id}/images
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /getUziImages
+
++ GET /uzi/images/{id}/nodes-segments
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /getImageSegmentsWithNodes
+
+
++ GET /uzi/devices
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /getDeviceList
+
+
+
++ POST /uzi/nodes
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /createNode
+
++ DELETE /uzi/nodes/{id}
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /deleteNode
+
++ PATCH /uzi/nodes/{id}
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /updateNode
+
+
+
++ POST /uzi/segments
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /createSegment
+
++ DELETE /uzi/segments
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /deleteSegment
+
++ PATCH /uzi/segments
+    - распарсит jwt, извлечет id для запроса
+    - вызовет uzi /updateSegment
+
+
     
 

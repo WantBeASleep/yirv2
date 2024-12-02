@@ -13,6 +13,7 @@ import (
 
 	"yirv2/uzi/internal/repository"
 
+	devicesrv "yirv2/uzi/internal/services/device"
 	imagesrv "yirv2/uzi/internal/services/image"
 	nodesrv "yirv2/uzi/internal/services/node"
 	segmentsrv "yirv2/uzi/internal/services/segment"
@@ -67,12 +68,13 @@ func run() (exitCode int) {
 
 	dao := repository.NewRepository(db)
 
+	deviceSrv := devicesrv.New(dao)
 	uziSrv := uzisrv.New(dao)
 	imageSrv := imagesrv.New(dao)
 	nodeSrv := nodesrv.New(dao)
 	serviceSrv := segmentsrv.New(dao)
 
-	deviceHandler := devicehandler.New(dao)
+	deviceHandler := devicehandler.New(deviceSrv)
 	uziHandler := uzihandler.New(uziSrv)
 	imageHandler := imagehandler.New(imageSrv)
 	nodeHandler := nodehandler.New(nodeSrv)

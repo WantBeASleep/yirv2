@@ -39,29 +39,6 @@ message GetDeviceListOut { repeated Device devices = 100; }
 
 message Echographic {
   string id = 100;
-  string contors = 200;
-  double left_lobe_length = 300;
-  double left_lobe_width = 400;
-  double left_lobe_thick = 500;
-  double left_lobe_volum = 600;
-  double right_lobe_length = 700;
-  double right_lobe_width = 800;
-  double right_lobe_thick = 900;
-  double right_lobe_volum = 1000;
-  double gland_volum = 1100;
-  double isthmus = 1200;
-  string struct = 1300;
-  string echogenicity = 1400;
-  string regional_lymph = 1500;
-  string vascularization = 1600;
-  string location = 1700;
-  string additional = 1800;
-  string conclusion = 1900;
-}
-
-// Обусловлено что ВСЕ параметры меняются
-message UpdateEchographicIn {
-  string id = 100;
   optional string contors = 200;
   optional double left_lobe_length = 300;
   optional double left_lobe_width = 400;
@@ -80,6 +57,11 @@ message UpdateEchographicIn {
   optional string location = 1700;
   optional string additional = 1800;
   optional string conclusion = 1900;
+}
+
+// Обусловлено что ВСЕ параметры меняются
+message UpdateEchographicIn {
+  Echographic echographic = 100;
 }
 
 message UpdateEchographicOut { Echographic echographic = 400; }
@@ -108,7 +90,6 @@ message UpdateUziIn {
   string id = 100;
   optional string projection = 200;
   optional bool checked = 300;
-  optional string patient_id = 400;
 }
 
 message UpdateUziOut { Uzi uzi = 100; }

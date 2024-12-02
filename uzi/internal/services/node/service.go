@@ -7,13 +7,14 @@ import (
 
 	"yirv2/uzi/internal/domain"
 	"yirv2/uzi/internal/repository"
+	"yirv2/uzi/internal/repository/entity"
 
 	"github.com/google/uuid"
 )
 
 type Service interface {
 	CreateNode(ctx context.Context, node domain.Node, segments []domain.Segment) (uuid.UUID, error)
-	UpdateNode(ctx context.Context, id uuid.UUID, patch OptionalNode) (domain.Node, error)
+	UpdateNode(ctx context.Context, id uuid.UUID, update UpdateNode) (domain.Node, error)
 	DeleteNode(ctx context.Context, id uuid.UUID) error
 }
 
@@ -40,7 +41,7 @@ func (s *service) CreateNode(ctx context.Context, node domain.Node, segments []d
 	node.Id = uuid.New()
 	// ai create через брокер
 	node.Ai = false
-	if err := s.dao.NewNodeQuery(ctx).InsertNode(node); err != nil {
+	if err := s.dao.NewNodeQuery(ctx).InsertNode(entity.Node{}.FromDomain(node)); err != nil {
 		// TODO: rollback нормально ошибку оформить
 		rollbackErr := s.dao.RollbackTx(ctx)
 		return uuid.Nil, fmt.Errorf("insert node: %w", errors.Join(err, rollbackErr))
@@ -51,7 +52,7 @@ func (s *service) CreateNode(ctx context.Context, node domain.Node, segments []d
 		v.Id = uuid.New()
 		v.NodeID = node.Id
 
-		if err := segmentQuery.InsertSegment(v); err != nil {
+		if err := segmentQuery.InsertSegment(entity.Segment{}.FromDomain(v)); err != nil {
 			rollbackErr := s.dao.RollbackTx(ctx)
 			return uuid.Nil, fmt.Errorf("insert segment: %w", errors.Join(err, rollbackErr))
 		}
@@ -64,18 +65,36 @@ func (s *service) CreateNode(ctx context.Context, node domain.Node, segments []d
 	return node.Id, nil
 }
 
+func (s *service) UpdateNode(ctx context.Context, id uuid.UUID, update UpdateNode) (domain.Node, error) {
+	nodeQuery := s.dao.NewNodeQuery(ctx)
+
+	nodeDB, err := nodeQuery.GetNodeByPK(id)
+	if err != nil {
+		return domain.Node{}, fmt.Errorf("get node: %w", err)
+	}
+	node := nodeDB.ToDomain()
+	update.Update(&node)
+
+	_, err = nodeQuery.UpdateNode(entity.Node{}.FromDomain(node))
+	if err != nil {
+		return domain.Node{}, fmt.Errorf("update node: %w", err)
+	}
+
+	return node, nil
+}
+
 func (s *service) DeleteNode(ctx context.Context, id uuid.UUID) error {
 	ctx, err := s.dao.BeginTx(ctx)
 	if err != nil {
 		return fmt.Errorf("start transaction: %w", err)
 	}
 
-	if err := s.dao.NewSegmentQuery(ctx).DeleteSegmentByUziID(id); err != nil {
+	if _, err := s.dao.NewSegmentQuery(ctx).DeleteSegmentByUziID(id); err != nil {
 		rollbackErr := s.dao.RollbackTx(ctx)
 		return fmt.Errorf("delete node segments: %w", errors.Join(err, rollbackErr))
 	}
 
-	if err := s.dao.NewNodeQuery(ctx).DeleteNode(id); err != nil {
+	if err := s.dao.NewNodeQuery(ctx).DeleteNodeByPK(id); err != nil {
 		rollbackErr := s.dao.RollbackTx(ctx)
 		return fmt.Errorf("delete node: %w", errors.Join(err, rollbackErr))
 	}
@@ -85,13 +104,4 @@ func (s *service) DeleteNode(ctx context.Context, id uuid.UUID) error {
 	}
 
 	return nil
-}
-
-func (s *service) UpdateNode(ctx context.Context, id uuid.UUID, patch OptionalNode) (domain.Node, error) {
-	node, err := s.dao.NewNodeQuery(ctx).UpdateNode(id, patch.Map())
-	if err != nil {
-		return domain.Node{}, fmt.Errorf("update node: %w", err)
-	}
-
-	return node, nil
 }

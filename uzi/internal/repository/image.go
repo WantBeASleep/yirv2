@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"yirv2/pkg/daolib"
-	"yirv2/uzi/internal/domain"
+	"yirv2/uzi/internal/repository/entity"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
@@ -13,7 +13,7 @@ import (
 const imageTable = "image"
 
 type ImageQuery interface {
-	GetImagesByUziID(uziID uuid.UUID) ([]domain.Image, error)
+	GetImagesByUziID(uziID uuid.UUID) ([]entity.Image, error)
 }
 
 type imageQuery struct {
@@ -24,15 +24,18 @@ func (q *imageQuery) SetBaseQuery(baseQuery *daolib.BaseQuery) {
 	q.BaseQuery = baseQuery
 }
 
-func (q *imageQuery) GetImagesByUziID(uziID uuid.UUID) ([]domain.Image, error) {
+func (q *imageQuery) GetImagesByUziID(uziID uuid.UUID) ([]entity.Image, error) {
 	query := q.QueryBuilder().
-		Select("id", "page").
+		Select(
+			"id",
+			"page",
+		).
 		From(imageTable).
 		Where(sq.Eq{
 			"uzi_id": uziID,
 		})
 
-	var images []domain.Image
+	var images []entity.Image
 	if err := q.Runner().Selectx(q.Context(), &images, query); err != nil {
 		return nil, fmt.Errorf("get image by uzi_id: %w", err)
 	}

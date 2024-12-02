@@ -61,7 +61,7 @@ func (h *handler) UpdateSegment(ctx context.Context, in *pb.UpdateSegmentIn) (*p
 	segment, err := h.segmentSrv.UpdateSegment(
 		ctx,
 		uuid.MustParse(in.Id),
-		segment.OptionalSegment{
+		segment.UpdateSegment{
 			Contor:   in.Contor,
 			Tirads23: in.Tirads_23,
 			Tirads4:  in.Tirads_4,

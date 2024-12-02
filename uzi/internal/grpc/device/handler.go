@@ -3,7 +3,7 @@ package device
 import (
 	"context"
 
-	"yirv2/uzi/internal/repository"
+	"yirv2/uzi/internal/services/device"
 
 	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc/codes"
@@ -17,19 +17,19 @@ type DeviceHandler interface {
 }
 
 type handler struct {
-	dao repository.DAO
+	deviceSrv device.Service
 }
 
 func New(
-	dao repository.DAO,
+	deviceSrv device.Service,
 ) DeviceHandler {
 	return &handler{
-		dao: dao,
+		deviceSrv: deviceSrv,
 	}
 }
 
 func (h *handler) GetDeviceList(ctx context.Context, _ *empty.Empty) (*pb.GetDeviceListOut, error) {
-	devices, err := h.dao.NewDeviceQuery(ctx).GetDeviceList()
+	devices, err := h.deviceSrv.GetDeviceList(ctx)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Что то пошло не так: %s", err.Error())
 	}

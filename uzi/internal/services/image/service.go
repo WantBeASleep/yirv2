@@ -6,6 +6,7 @@ import (
 
 	"yirv2/uzi/internal/domain"
 	"yirv2/uzi/internal/repository"
+	"yirv2/uzi/internal/repository/entity"
 
 	"github.com/google/uuid"
 )
@@ -33,7 +34,7 @@ func (s *service) GetUziImages(ctx context.Context, uziID uuid.UUID) ([]domain.I
 		return nil, fmt.Errorf("get images by uzi_id: %w", err)
 	}
 
-	return images, nil
+	return entity.Image{}.SliceToDomain(images), nil
 }
 
 func (s *service) GetImageSegmentsWithNodes(ctx context.Context, id uuid.UUID) ([]domain.Node, []domain.Segment, error) {
@@ -48,5 +49,5 @@ func (s *service) GetImageSegmentsWithNodes(ctx context.Context, id uuid.UUID) (
 		return nil, nil, fmt.Errorf("get nodes by image_id: %w", err)
 	}
 
-	return nodes, segments, nil
+	return entity.Node{}.SliceToDomain(nodes), entity.Segment{}.SliceToDomain(segments), nil
 }

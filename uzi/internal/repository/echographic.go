@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"yirv2/pkg/daolib"
-	"yirv2/uzi/internal/domain"
+	"yirv2/uzi/internal/repository/entity"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
@@ -13,9 +13,9 @@ import (
 const echographicTable = "echographic"
 
 type EchographicQuery interface {
-	InsertEchographic(echographic domain.Echographic) error
-	UpdateEchographic(id uuid.UUID, fields map[string]any) (domain.Echographic, error)
-	GetEchographicByPK(id uuid.UUID) (domain.Echographic, error)
+	InsertEchographic(echographic entity.Echographic) error
+	GetEchographicByPK(id uuid.UUID) (entity.Echographic, error)
+	UpdateEchographic(echographic entity.Echographic) (int64, error)
 }
 
 type echographicQuery struct {
@@ -26,7 +26,7 @@ func (q *echographicQuery) SetBaseQuery(baseQuery *daolib.BaseQuery) {
 	q.BaseQuery = baseQuery
 }
 
-func (q *echographicQuery) InsertEchographic(echographic domain.Echographic) error {
+func (q *echographicQuery) InsertEchographic(echographic entity.Echographic) error {
 	query := q.QueryBuilder().
 		Insert(echographicTable).
 		Columns(
@@ -80,35 +80,73 @@ func (q *echographicQuery) InsertEchographic(echographic domain.Echographic) err
 	return nil
 }
 
-func (q *echographicQuery) UpdateEchographic(id uuid.UUID, fields map[string]any) (domain.Echographic, error) {
+func (q *echographicQuery) GetEchographicByPK(id uuid.UUID) (entity.Echographic, error) {
 	query := q.QueryBuilder().
-		Update(echographicTable).
-		SetMap(fields).
-		Where(sq.Eq{
-			"id": id,
-		}).
-		Suffix("RETURNING *")
-
-	var echographic domain.Echographic
-	if err := q.Runner().Getx(q.Context(), &echographic, query); err != nil {
-		return domain.Echographic{}, fmt.Errorf("update echographic: %w", err)
-	}
-
-	return echographic, nil
-}
-
-func (q *echographicQuery) GetEchographicByPK(id uuid.UUID) (domain.Echographic, error) {
-	query := q.QueryBuilder().
-		Select("*").
+		Select(
+			"id",
+			"contors",
+			"left_lobe_length",
+			"left_lobe_width",
+			"left_lobe_thick",
+			"left_lobe_volum",
+			"right_lobe_length",
+			"right_lobe_width",
+			"right_lobe_thick",
+			"right_lobe_volum",
+			"gland_volum",
+			"isthmus",
+			"struct",
+			"echogenicity",
+			"regional_lymph",
+			"vascularization",
+			"location",
+			"additional",
+			"conclusion",
+		).
 		From(echographicTable).
 		Where(sq.Eq{
 			"id": id,
 		})
 
-	var echographic domain.Echographic
+	var echographic entity.Echographic
 	if err := q.Runner().Getx(q.Context(), &echographic, query); err != nil {
-		return domain.Echographic{}, fmt.Errorf("get echographic: %w", err)
+		return entity.Echographic{}, fmt.Errorf("get echographic: %w", err)
 	}
 
 	return echographic, nil
+}
+
+func (q *echographicQuery) UpdateEchographic(echographic entity.Echographic) (int64, error) {
+	query := q.QueryBuilder().
+		Update(echographicTable).
+		SetMap(sq.Eq{
+			"contors":           echographic.Contors,
+			"left_lobe_length":  echographic.LeftLobeLength,
+			"left_lobe_width":   echographic.LeftLobeWidth,
+			"left_lobe_thick":   echographic.LeftLobeThick,
+			"left_lobe_volum":   echographic.LeftLobeVolum,
+			"right_lobe_length": echographic.RightLobeLength,
+			"right_lobe_width":  echographic.RightLobeWidth,
+			"right_lobe_thick":  echographic.RightLobeThick,
+			"right_lobe_volum":  echographic.RightLobeVolum,
+			"gland_volum":       echographic.GlandVolum,
+			"isthmus":           echographic.Isthmus,
+			"struct":            echographic.Struct,
+			"echogenicity":      echographic.Echogenicity,
+			"regional_lymph":    echographic.RegionalLymph,
+			"vascularization":   echographic.Vascularization,
+			"location":          echographic.Location,
+			"additional":        echographic.Additional,
+			"conclusion":        echographic.Conclusion,
+		}).
+		Where(sq.Eq{
+			"id": echographic.Id,
+		})
+
+	rows, err := q.Runner().Execx(q.Context(), query)
+	if err != nil {
+		return 0, fmt.Errorf("update node: %w", err)
+	}
+
+	return rows.RowsAffected()
 }

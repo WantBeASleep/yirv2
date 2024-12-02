@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"yirv2/pkg/daolib"
-	"yirv2/uzi/internal/domain"
+	"yirv2/uzi/internal/repository/entity"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
@@ -13,9 +13,9 @@ import (
 const uziTable = "uzi"
 
 type UziQuery interface {
-	InsertUzi(uzi domain.Uzi) error
-	UpdateUzi(id uuid.UUID, fields map[string]any) (domain.Uzi, error)
-	GetUziByPK(id uuid.UUID) (domain.Uzi, error)
+	InsertUzi(uzi entity.Uzi) error
+	GetUziByPK(id uuid.UUID) (entity.Uzi, error)
+	UpdateUzi(uzi entity.Uzi) (int64, error)
 }
 
 type uziQuery struct {
@@ -26,11 +26,25 @@ func (q *uziQuery) SetBaseQuery(baseQuery *daolib.BaseQuery) {
 	q.BaseQuery = baseQuery
 }
 
-func (q *uziQuery) InsertUzi(uzi domain.Uzi) error {
+func (q *uziQuery) InsertUzi(uzi entity.Uzi) error {
 	query := q.QueryBuilder().
 		Insert(uziTable).
-		Columns("id", "projection", "checked", "patient_id", "device_id", "create_at").
-		Values(uzi.Id, uzi.Projection, uzi.Checked, uzi.PatientID, uzi.DeviceID, uzi.CreateAt)
+		Columns(
+			"id",
+			"projection",
+			"checked",
+			"patient_id",
+			"device_id",
+			"create_at",
+		).
+		Values(
+			uzi.Id,
+			uzi.Projection,
+			uzi.Checked,
+			uzi.PatientID,
+			uzi.DeviceID,
+			uzi.CreateAt,
+		)
 
 	_, err := q.Runner().Execx(q.Context(), query)
 	if err != nil {
@@ -40,35 +54,44 @@ func (q *uziQuery) InsertUzi(uzi domain.Uzi) error {
 	return nil
 }
 
-func (q *uziQuery) UpdateUzi(id uuid.UUID, fields map[string]any) (domain.Uzi, error) {
+func (q *uziQuery) GetUziByPK(id uuid.UUID) (entity.Uzi, error) {
 	query := q.QueryBuilder().
-		Update(uziTable).
-		SetMap(fields).
-		Where(sq.Eq{
-			"id": id,
-		}).
-		Suffix("RETURNING *")
-
-	var uzi domain.Uzi
-	if err := q.Runner().Getx(q.Context(), &uzi, query); err != nil {
-		return domain.Uzi{}, fmt.Errorf("update uzi: %w", err)
-	}
-
-	return uzi, nil
-}
-
-func (q *uziQuery) GetUziByPK(id uuid.UUID) (domain.Uzi, error) {
-	query := q.QueryBuilder().
-		Select("id", "projection", "checked", "patient_id", "device_id", "create_at").
+		Select(
+			"id",
+			"projection",
+			"checked",
+			"patient_id",
+			"device_id",
+			"create_at",
+		).
 		From(uziTable).
 		Where(sq.Eq{
 			"id": id,
 		})
 
-	var uzi domain.Uzi
+	var uzi entity.Uzi
 	if err := q.Runner().Getx(q.Context(), &uzi, query); err != nil {
-		return domain.Uzi{}, fmt.Errorf("get uzi: %w", err)
+		return entity.Uzi{}, fmt.Errorf("get uzi: %w", err)
 	}
 
 	return uzi, nil
+}
+
+func (q *uziQuery) UpdateUzi(uzi entity.Uzi) (int64, error) {
+	query := q.QueryBuilder().
+		Update(uziTable).
+		SetMap(sq.Eq{
+			"projection": uzi.Projection,
+			"checked":    uzi.Checked,
+		}).
+		Where(sq.Eq{
+			"id": uzi.Id,
+		})
+
+	rows, err := q.Runner().Execx(q.Context(), query)
+	if err != nil {
+		return 0, fmt.Errorf("update uzi: %w", err)
+	}
+
+	return rows.RowsAffected()
 }

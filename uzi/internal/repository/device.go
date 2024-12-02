@@ -4,13 +4,13 @@ import (
 	"fmt"
 
 	"yirv2/pkg/daolib"
-	"yirv2/uzi/internal/domain"
+	"yirv2/uzi/internal/repository/entity"
 )
 
 const deviceTable = "device"
 
 type DeviceQuery interface {
-	GetDeviceList() ([]domain.Device, error)
+	GetDeviceList() ([]entity.Device, error)
 }
 
 type deviceQuery struct {
@@ -21,7 +21,7 @@ func (q *deviceQuery) SetBaseQuery(baseQuery *daolib.BaseQuery) {
 	q.BaseQuery = baseQuery
 }
 
-func (q *deviceQuery) GetDeviceList() ([]domain.Device, error) {
+func (q *deviceQuery) GetDeviceList() ([]entity.Device, error) {
 	query := q.QueryBuilder().
 		Select(
 			"id",
@@ -29,7 +29,7 @@ func (q *deviceQuery) GetDeviceList() ([]domain.Device, error) {
 		).
 		From(deviceTable)
 
-	var devices []domain.Device
+	var devices []entity.Device
 	if err := q.Runner().Selectx(q.Context(), &devices, query); err != nil {
 		return nil, fmt.Errorf("get device list: %w", err)
 	}

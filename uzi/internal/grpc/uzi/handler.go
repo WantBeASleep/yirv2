@@ -3,7 +3,6 @@ package uzi
 import (
 	"context"
 
-	"yirv2/pkg/gtclib"
 	"yirv2/uzi/internal/domain"
 	pb "yirv2/uzi/internal/generated/grpc/service"
 	"yirv2/uzi/internal/services/uzi"
@@ -15,8 +14,8 @@ import (
 
 type UziHandler interface {
 	CreateUzi(ctx context.Context, req *pb.CreateUziIn) (*pb.CreateUziOut, error)
-	UpdateUzi(ctx context.Context, req *pb.UpdateUziIn) (*pb.UpdateUziOut, error)
 	GetUzi(ctx context.Context, in *pb.GetUziIn) (*pb.GetUziOut, error)
+	UpdateUzi(ctx context.Context, req *pb.UpdateUziIn) (*pb.UpdateUziOut, error)
 	UpdateEchographic(ctx context.Context, in *pb.UpdateEchographicIn) (*pb.UpdateEchographicOut, error)
 }
 
@@ -45,26 +44,8 @@ func (h *handler) CreateUzi(ctx context.Context, in *pb.CreateUziIn) (*pb.Create
 	return &pb.CreateUziOut{Id: uuid.String()}, nil
 }
 
-func (h *handler) UpdateUzi(ctx context.Context, in *pb.UpdateUziIn) (*pb.UpdateUziOut, error) {
-	uzi, err := h.uziSrv.UpdateUzi(ctx,
-		uuid.MustParse(in.Id),
-		uzi.OptionalUzi{
-			Projection: in.Projection,
-			Checked:    in.Checked,
-			PatientID:  gtclib.Uuid.StringPToP(in.PatientId),
-		},
-	)
-	if err != nil {
-		return nil, status.Errorf(codes.Internal, "Что то пошло не так: %s", err.Error())
-	}
-
-	return &pb.UpdateUziOut{
-		Uzi: domainUziToPbUzi(&uzi),
-	}, nil
-}
-
 func (h *handler) GetUzi(ctx context.Context, in *pb.GetUziIn) (*pb.GetUziOut, error) {
-	uzi, echographic, err := h.uziSrv.GetUzi(ctx, uuid.MustParse(in.Id))
+	uzi, echographic, err := h.uziSrv.GetUziByID(ctx, uuid.MustParse(in.Id))
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Что то пошло не так: %s", err.Error())
 	}
@@ -78,27 +59,47 @@ func (h *handler) GetUzi(ctx context.Context, in *pb.GetUziIn) (*pb.GetUziOut, e
 	}, nil
 }
 
+func (h *handler) UpdateUzi(ctx context.Context, in *pb.UpdateUziIn) (*pb.UpdateUziOut, error) {
+	uzi, err := h.uziSrv.UpdateUzi(ctx,
+		uuid.MustParse(in.Id),
+		uzi.UpdateUzi{
+			Projection: in.Projection,
+			Checked:    in.Checked,
+		},
+	)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Что то пошло не так: %s", err.Error())
+	}
+
+	return &pb.UpdateUziOut{
+		Uzi: domainUziToPbUzi(&uzi),
+	}, nil
+}
+
 func (h *handler) UpdateEchographic(ctx context.Context, in *pb.UpdateEchographicIn) (*pb.UpdateEchographicOut, error) {
-	echographic, err := h.uziSrv.UpdateEchographic(ctx, uuid.MustParse(in.Id), uzi.OptionalEchographic{
-		Contors:         in.Contors,
-		LeftLobeLength:  in.LeftLobeLength,
-		LeftLobeWidth:   in.LeftLobeWidth,
-		LeftLobeThick:   in.LeftLobeThick,
-		LeftLobeVolum:   in.LeftLobeVolum,
-		RightLobeLength: in.RightLobeLength,
-		RightLobeWidth:  in.RightLobeWidth,
-		RightLobeThick:  in.RightLobeThick,
-		RightLobeVolum:  in.RightLobeVolum,
-		GlandVolum:      in.GlandVolum,
-		Isthmus:         in.Isthmus,
-		Struct:          in.Struct,
-		Echogenicity:    in.Echogenicity,
-		RegionalLymph:   in.RegionalLymph,
-		Vascularization: in.Vascularization,
-		Location:        in.Location,
-		Additional:      in.Additional,
-		Conclusion:      in.Conclusion,
-	})
+	echographic, err := h.uziSrv.UpdateEchographic(
+		ctx,
+		uuid.MustParse(in.Echographic.Id),
+		uzi.UpdateEchographic{
+			Contors:         in.Echographic.Contors,
+			LeftLobeLength:  in.Echographic.LeftLobeLength,
+			LeftLobeWidth:   in.Echographic.LeftLobeWidth,
+			LeftLobeThick:   in.Echographic.LeftLobeThick,
+			LeftLobeVolum:   in.Echographic.LeftLobeVolum,
+			RightLobeLength: in.Echographic.RightLobeLength,
+			RightLobeWidth:  in.Echographic.RightLobeWidth,
+			RightLobeThick:  in.Echographic.RightLobeThick,
+			RightLobeVolum:  in.Echographic.RightLobeVolum,
+			GlandVolum:      in.Echographic.GlandVolum,
+			Isthmus:         in.Echographic.Isthmus,
+			Struct:          in.Echographic.Struct,
+			Echogenicity:    in.Echographic.Echogenicity,
+			RegionalLymph:   in.Echographic.RegionalLymph,
+			Vascularization: in.Echographic.Vascularization,
+			Location:        in.Echographic.Location,
+			Additional:      in.Echographic.Additional,
+			Conclusion:      in.Echographic.Conclusion,
+		})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Что то пошло не так: %s", err.Error())
 	}

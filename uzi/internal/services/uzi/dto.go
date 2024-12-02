@@ -1,29 +1,24 @@
 package uzi
 
-import "github.com/google/uuid"
+import (
+	"yirv2/uzi/internal/domain"
+)
 
-type OptionalUzi struct {
+type UpdateUzi struct {
 	Projection *string
 	Checked    *bool
-	PatientID  *uuid.UUID
 }
 
-func (u OptionalUzi) Map() map[string]any {
-	res := map[string]any{}
+func (u UpdateUzi) Update(d *domain.Uzi) {
 	if u.Projection != nil {
-		res["projection"] = *u.Projection
+		d.Projection = *u.Projection
 	}
 	if u.Checked != nil {
-		res["checked"] = *u.Checked
+		d.Checked = *u.Checked
 	}
-	if u.PatientID != nil {
-		res["patient"] = *u.PatientID
-	}
-
-	return res
 }
 
-type OptionalEchographic struct {
+type UpdateEchographic struct {
 	Contors         *string
 	LeftLobeLength  *float64
 	LeftLobeWidth   *float64
@@ -45,63 +40,59 @@ type OptionalEchographic struct {
 }
 
 // TODO: пойти написать рефлексию
-func (u OptionalEchographic) Map() map[string]any {
-	res := map[string]any{}
-
+func (u UpdateEchographic) Update(d *domain.Echographic) {
 	if u.Contors != nil {
-		res["contors"] = *u.Contors
+		d.Contors = u.Contors
 	}
 	if u.LeftLobeLength != nil {
-		res["left_lobe_length"] = *u.LeftLobeLength
+		d.LeftLobeLength = u.LeftLobeLength
 	}
 	if u.LeftLobeWidth != nil {
-		res["left_lobe_width"] = *u.LeftLobeWidth
+		d.LeftLobeWidth = u.LeftLobeWidth
 	}
 	if u.LeftLobeThick != nil {
-		res["left_lobe_thick"] = *u.LeftLobeThick
+		d.LeftLobeThick = u.LeftLobeThick
 	}
 	if u.LeftLobeVolum != nil {
-		res["left_lobe_volum"] = *u.LeftLobeVolum
+		d.LeftLobeVolum = u.LeftLobeVolum
 	}
 	if u.RightLobeLength != nil {
-		res["right_lobe_length"] = *u.RightLobeLength
+		d.RightLobeLength = u.RightLobeLength
 	}
 	if u.RightLobeWidth != nil {
-		res["right_lobe_width"] = *u.RightLobeWidth
+		d.RightLobeWidth = u.RightLobeWidth
 	}
 	if u.RightLobeThick != nil {
-		res["right_lobe_thick"] = *u.RightLobeThick
+		d.RightLobeThick = u.RightLobeThick
 	}
 	if u.RightLobeVolum != nil {
-		res["right_lobe_volum"] = *u.RightLobeVolum
+		d.RightLobeVolum = u.RightLobeVolum
 	}
 	if u.GlandVolum != nil {
-		res["gland_volum"] = *u.GlandVolum
+		d.GlandVolum = u.GlandVolum
 	}
 	if u.Isthmus != nil {
-		res["isthmus"] = *u.Isthmus
+		d.Isthmus = u.Isthmus
 	}
 	if u.Struct != nil {
-		res["struct"] = *u.Struct
+		d.Struct = u.Struct
 	}
 	if u.Echogenicity != nil {
-		res["echogenicity"] = *u.Echogenicity
+		d.Echogenicity = u.Echogenicity
 	}
 	if u.RegionalLymph != nil {
-		res["regional_lymph"] = *u.RegionalLymph
+		d.RegionalLymph = u.RegionalLymph
 	}
 	if u.Vascularization != nil {
-		res["vascularization"] = *u.Vascularization
+		d.Vascularization = u.Vascularization
 	}
 	if u.Location != nil {
-		res["location"] = *u.Location
+		d.Location = u.Location
 	}
 	if u.Additional != nil {
-		res["additional"] = *u.Additional
+		d.Additional = u.Additional
 	}
 	if u.Conclusion != nil {
-		res["conclusion"] = *u.Conclusion
+		d.Conclusion = u.Conclusion
 	}
-
-	return res
 }
