@@ -1,5 +1,14 @@
 # Auth сервис
 
+## Reqire
+
+| Env | Value | Описание |
+|----------|----------|----------|
+| JWT_PRIVATE_KEY    | rsa256   | ключ шифрования   |
+| JWT_PUBLIC_KEY    | rsa256   | ключ шифрования   |
+
+
+
 Основная цель сервиса - обеспечить пользователя jwt токеном, для аунтентификации и авторизации.
 _В будующем можно накрутить сюда систему ролей_
 
@@ -18,7 +27,7 @@ public key: signature --> header, payload
 * id _соответствует с id мед работна_
 * email 
 * password _в захешированным виде_
-* rtw _refresh token word_
+* tokem _refresh token_
 
 /register
     - -> email, password

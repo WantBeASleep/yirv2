@@ -8,3 +8,7 @@ vendor.protogen/*
 
 #bin
 bin
+
+# private
+*.key
+*.pem
