@@ -23,11 +23,11 @@ type DAO interface {
 type dao struct {
 	daolib.DAO
 
-	s3       minio.Client
+	s3       *minio.Client
 	s3bucket string
 }
 
-func NewRepository(psql *sqlx.DB, s3 minio.Client, s3bucket string) DAO {
+func NewRepository(psql *sqlx.DB, s3 *minio.Client, s3bucket string) DAO {
 	return &dao{
 		DAO:      daolib.NewDao(psql),
 		s3:       s3,

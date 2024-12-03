@@ -20,7 +20,7 @@ type FileRepo interface {
 }
 
 type fileRepo struct {
-	s3     minio.Client
+	s3     *minio.Client
 	bucket string
 }
 

@@ -30,6 +30,8 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/minio/minio-go/v7"
+	"github.com/minio/minio-go/v7/pkg/credentials"
 	"google.golang.org/grpc"
 )
 
@@ -61,12 +63,21 @@ func run() (exitCode int) {
 	}
 	defer db.Close()
 
+	client, err := minio.New(cfg.S3.Endpoint, &minio.Options{
+		Secure: false,
+		Creds:  credentials.NewStaticV4(cfg.S3.Access_Token, cfg.S3.Secret_Token, ""),
+	})
+	if err != nil {
+		slog.Error("init s3", "err", err)
+		return failExitCode
+	}
+
 	if err := db.Ping(); err != nil {
 		slog.Error("ping db", "err", err)
 		return failExitCode
 	}
 
-	dao := repository.NewRepository(db)
+	dao := repository.NewRepository(db, client, "uzi")
 
 	deviceSrv := devicesrv.New(dao)
 	uziSrv := uzisrv.New(dao)

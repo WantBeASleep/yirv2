@@ -2,7 +2,8 @@ package config
 
 type Config struct {
 	App App `yaml:"app"`
-	DB  DB  `yaml:"db"`
+	DB  DB
+	S3  S3
 }
 
 type App struct {
@@ -10,5 +11,11 @@ type App struct {
 }
 
 type DB struct {
-	Dsn string `yaml:"dsn" env:"DB_DSN" env-required:"true"`
+	Dsn string `env:"DB_DSN" env-required:"true"`
+}
+
+type S3 struct {
+	Endpoint     string `env:"S3_ENDPOINT" env-required:"true"`
+	Access_Token string `env:"S3_TOKEN_ACCESS" env-required:"true"`
+	Secret_Token string `env:"S3_TOKEN_SECRET" env-required:"true"`
 }
