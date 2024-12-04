@@ -2,10 +2,12 @@
 package main
 
 import (
+	"context"
 	"log/slog"
 	"net"
 	"os"
 
+	"yirv2/pkg/brokerlib"
 	pkgconfig "yirv2/pkg/config"
 	"yirv2/pkg/grpclib"
 	"yirv2/pkg/loglib"
@@ -27,6 +29,9 @@ import (
 	nodehandler "yirv2/uzi/internal/grpc/node"
 	segmenthandler "yirv2/uzi/internal/grpc/segment"
 	uzihandler "yirv2/uzi/internal/grpc/uzi"
+
+	uziprocessedsubscriber "yirv2/uzi/internal/broker/uziprocessed"
+	uziuploadsubscriber "yirv2/uzi/internal/broker/uziupload"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -85,6 +90,7 @@ func run() (exitCode int) {
 	nodeSrv := nodesrv.New(dao)
 	serviceSrv := segmentsrv.New(dao)
 
+	// grpc
 	deviceHandler := devicehandler.New(deviceSrv)
 	uziHandler := uzihandler.New(uziSrv)
 	imageHandler := imagehandler.New(imageSrv)
@@ -102,17 +108,59 @@ func run() (exitCode int) {
 	server := grpc.NewServer(grpc.ChainUnaryInterceptor(grpclib.ServerCallLoggerInterceptor))
 	pb.RegisterUziSrvServer(server, handler)
 
+	// broker
+	uziuploadSubscriber := uziuploadsubscriber.New(imageSrv)
+	uziprocessedSubscriber := uziprocessedsubscriber.New(nodeSrv)
+
+	uziuploadHandler, err := brokerlib.GetSubscriberHandler(
+		uziuploadSubscriber,
+		cfg.Broker.Addrs,
+		nil,
+	)
+	if err != nil {
+		slog.Error("create uzipload sub", "err", err)
+		return failExitCode
+	}
+
+	uziprocessedHandler, err := brokerlib.GetSubscriberHandler(
+		uziprocessedSubscriber,
+		cfg.Broker.Addrs,
+		nil,
+	)
+	if err != nil {
+		slog.Error("create uziprocesse sub", "err", err)
+		return failExitCode
+	}
+
 	lis, err := net.Listen("tcp", cfg.App.Url)
 	if err != nil {
 		slog.Error("take port", "err", err)
 		return failExitCode
 	}
 
+	close := make(chan struct{})
+	// ЛЮТОЕ MVP
 	slog.Info("start serve", slog.String("app url", cfg.App.Url))
-	if err := server.Serve(lis); err != nil {
-		slog.Error("take port", "err", err)
-		return failExitCode
-	}
+	go func() {
+		if err := server.Serve(lis); err != nil {
+			slog.Error("take port", "err", err)
+			panic("serve grpc")
+		}
+		close <- struct{}{}
+	}()
+	go func() {
+		// пока без DI
+		if err := uziuploadHandler.Start(context.Background()); err != nil {
+			slog.Error("start uziupload handler", "err", err)
+		}
+	}()
+	go func() {
+		if err := uziprocessedHandler.Start(context.Background()); err != nil {
+			slog.Error("start uziprocessedHandler handler", "err", err)
+		}
+	}()
+
+	<-close
 
 	return successExitCode
 }

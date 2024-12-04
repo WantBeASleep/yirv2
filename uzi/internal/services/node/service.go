@@ -14,6 +14,7 @@ import (
 
 type Service interface {
 	CreateNode(ctx context.Context, node domain.Node, segments []domain.Segment) (uuid.UUID, error)
+	InsertAiNodeWithSegments(ctx context.Context, nodes []domain.Node, segments []domain.Segment) error
 	UpdateNode(ctx context.Context, id uuid.UUID, update UpdateNode) (domain.Node, error)
 	DeleteNode(ctx context.Context, id uuid.UUID) error
 }
@@ -36,7 +37,6 @@ func (s *service) CreateNode(ctx context.Context, node domain.Node, segments []d
 	if err != nil {
 		return uuid.Nil, fmt.Errorf("start transaction: %w", err)
 	}
-	defer func() {}()
 
 	node.Id = uuid.New()
 	// ai create через брокер
@@ -63,6 +63,32 @@ func (s *service) CreateNode(ctx context.Context, node domain.Node, segments []d
 	}
 
 	return node.Id, nil
+}
+
+func (s *service) InsertAiNodeWithSegments(ctx context.Context, nodes []domain.Node, segments []domain.Segment) error {
+	ctx, err := s.dao.BeginTx(ctx)
+	if err != nil {
+		return fmt.Errorf("start transaction: %w", err)
+	}
+
+	nodeQuery := s.dao.NewNodeQuery(ctx)
+	segmentQuery := s.dao.NewSegmentQuery(ctx)
+
+	for i := range nodes {
+		nodes[i].Ai = true
+		if err := nodeQuery.InsertNode(entity.Node{}.FromDomain(nodes[i])); err != nil {
+			rollbackErr := s.dao.RollbackTx(ctx)
+			return fmt.Errorf("insert node: %w", errors.Join(err, rollbackErr))
+		}
+	}
+
+	for _, v := range segments {
+		if err := segmentQuery.InsertSegment(entity.Segment{}.FromDomain(v)); err != nil {
+			rollbackErr := s.dao.RollbackTx(ctx)
+			return fmt.Errorf("insert segment: %w", errors.Join(err, rollbackErr))
+		}
+	}
+	return nil
 }
 
 func (s *service) UpdateNode(ctx context.Context, id uuid.UUID, update UpdateNode) (domain.Node, error) {

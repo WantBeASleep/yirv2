@@ -14,6 +14,7 @@ const uziTable = "uzi"
 
 type UziQuery interface {
 	InsertUzi(uzi entity.Uzi) error
+	CheckExist(id uuid.UUID) (bool, error)
 	GetUziByPK(id uuid.UUID) (entity.Uzi, error)
 	UpdateUzi(uzi entity.Uzi) (int64, error)
 }
@@ -75,6 +76,31 @@ func (q *uziQuery) GetUziByPK(id uuid.UUID) (entity.Uzi, error) {
 	}
 
 	return uzi, nil
+}
+
+func (q *uziQuery) CheckExist(id uuid.UUID) (bool, error) {
+	query := q.QueryBuilder().
+		Select(
+			"id",
+			"projection",
+			"checked",
+			"patient_id",
+			"device_id",
+			"create_at",
+		).
+		Prefix("SELECT EXISTS (").
+		From(uziTable).
+		Where(sq.Eq{
+			"id": id,
+		}).
+		Suffix(")")
+
+	var exists bool
+	if err := q.Runner().Getx(q.Context(), &exists, query); err != nil {
+		return false, fmt.Errorf("check exists uzi: %w", err)
+	}
+
+	return exists, nil
 }
 
 func (q *uziQuery) UpdateUzi(uzi entity.Uzi) (int64, error) {

@@ -2,6 +2,7 @@ package image
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"path/filepath"
 
@@ -16,6 +17,7 @@ import (
 type Service interface {
 	GetUziImages(ctx context.Context, uziID uuid.UUID) ([]domain.Image, error)
 	GetImageSegmentsWithNodes(ctx context.Context, id uuid.UUID) ([]domain.Node, []domain.Segment, error)
+	SplitUzi(ctx context.Context, uziID uuid.UUID) error
 }
 
 type service struct {
@@ -79,6 +81,14 @@ func (s *service) GetImageSegmentsWithNodes(ctx context.Context, id uuid.UUID) (
 // написать в kafka
 func (s *service) SplitUzi(ctx context.Context, uziID uuid.UUID) error {
 	fileRepo := s.dao.NewFileRepo()
+
+	exists, err := s.dao.NewUziQuery(ctx).CheckExist(uziID)
+	if err != nil {
+		return fmt.Errorf("check exists uzi: %w", err)
+	}
+	if !exists {
+		return errors.New("uzi doesnt exist")
+	}
 
 	file, closer, err := fileRepo.GetFileViaTemp(ctx, filepath.Join(uziID.String(), uziID.String()))
 	if err != nil {
